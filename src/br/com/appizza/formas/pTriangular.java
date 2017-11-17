@@ -10,5 +10,5 @@ package br.com.appizza.formas;
  * @author Gabriel
  */
 public class pTriangular {
-    
+        
 }
