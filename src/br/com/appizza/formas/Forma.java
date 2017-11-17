@@ -10,11 +10,13 @@ package br.com.appizza.formas;
  * @author Gabriel
  */
 public class Forma {
-    
+
     private String tipo[];
     private String sabor[];
     private String forma;
     private float dimensao;
+    private String observacoes;
+    private double valor;
     
     public String getForma() {
         return forma;
@@ -46,5 +48,21 @@ public class Forma {
 
     public void setSabor(String[] sabor) {
         this.sabor = sabor;
+    }
+
+    public String getObservacoes() {
+        return observacoes;
+    }
+
+    public void setObservacoes(String observacoes) {
+        this.observacoes = observacoes;
+    }
+
+    public double getValor() {
+        return valor;
+    }
+
+    public void setValor(double valor) {
+        this.valor = valor;
     }
 }
