@@ -9,6 +9,6 @@ package br.com.appizza.formas;
  *
  * @author Gabriel
  */
-public class pRedonda {
+public class pRedonda extends Forma{
     
 }

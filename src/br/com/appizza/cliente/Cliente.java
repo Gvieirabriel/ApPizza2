@@ -5,6 +5,9 @@
  */
 package br.com.appizza.cliente;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Gabriel
@@ -14,6 +17,7 @@ public class Cliente {
     private String nome;
     private String sobrenome;
     private String telefone;
+    private List<Cliente> listaClientes = new ArrayList();
 
     public String getNome() {
         return nome;
@@ -39,5 +43,12 @@ public class Cliente {
         this.telefone = telefone;
     }
     
+    public List<Cliente> getListaClientes() {
+        return listaClientes;
+    }
+
+    public void setListaClientes(List<Cliente> listaClientes) {
+        this.listaClientes = listaClientes;
+    }     
     
 }

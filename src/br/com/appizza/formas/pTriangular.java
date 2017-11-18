@@ -9,6 +9,6 @@ package br.com.appizza.formas;
  *
  * @author Gabriel
  */
-public class pTriangular {
+public class pTriangular extends Forma{
         
 }
