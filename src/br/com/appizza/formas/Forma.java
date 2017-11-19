@@ -14,7 +14,7 @@ public class Forma {
     private String tipo[];
     private String sabor[];
     private String forma;
-    private float dimensao;
+    private double dimensao;
     private String observacoes;
     private double valor;
     
@@ -26,11 +26,11 @@ public class Forma {
         this.forma = forma;
     }
 
-    public float getDimensao() {
+    public double getDimensao() {
         return dimensao;
     }
 
-    public void setDimensao(float dimensao) {
+    public void setDimensao(double dimensao) {
         this.dimensao = dimensao;
     }
 

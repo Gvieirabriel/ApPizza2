@@ -6,6 +6,8 @@
 package br.com.appizza.pedido;
 
 import br.com.appizza.formas.Forma;
+import static java.util.Collections.list;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -16,7 +18,7 @@ public class Pedido {
 
     private int numeroPedido;
     private double valorTotal;
-    private List<Forma> pedidos;
+    private List<Forma> pizzas;
     private String status;
 
     public int getNumeroPedido() {
@@ -36,11 +38,11 @@ public class Pedido {
     }
 
     public List<Forma> getPedidos() {
-        return pedidos;
+        return pizzas;
     }
 
     public void setPedidos(List<Forma> pedidos) {
-        this.pedidos = pedidos;
+        this.pizzas = pedidos;
     }
 
     public String getStatus() {
@@ -49,6 +51,16 @@ public class Pedido {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+    
+    public double calculaPrecoTotal(){
+        for(int i = 0; i < pizzas.size(); i++){
+            if(pizzas.get(i).getValor() != 0)
+                valorTotal += pizzas.get(i).getValor();
+            else
+                return 0;//Retornar zero significa que alguma pizza não ta com valor calculado
+        }
+        return valorTotal;
     }
 
 }

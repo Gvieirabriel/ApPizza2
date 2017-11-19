@@ -5,10 +5,26 @@
  */
 package br.com.appizza.formas;
 
+import static java.lang.Math.PI;
+
 /**
  *
  * @author Gabriel
  */
-public class pRedonda {
+public class pRedonda extends Forma {
     
+    @Override
+    public void setDimensao(double dimensao) {
+        if(dimensao>7&&dimensao<23)
+            super.setDimensao(dimensao);
+        else
+            System.out.println("Dimensao invalida");
+    }
+    
+    public void setDimensaoCmQuadrados(double dimensaoCmQuadrados) {
+        if(dimensaoCmQuadrados>100&&dimensaoCmQuadrados<1600)
+            super.setDimensao(Math.sqrt(dimensaoCmQuadrados/PI));
+        else
+            System.out.println("Dimensao invalida");
+    }
 }
