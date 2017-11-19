@@ -5,16 +5,18 @@
  */
 package br.com.appizza.formas;
 
+import java.util.List;
+
 /**
  *
  * @author Gabriel
  */
 public class Forma {
 
-    private String tipo[];
-    private String sabor[];
+    private List<String> tipos;
+    private List<String> sabores;
     private String forma;
-    private float dimensao;
+    private double dimensao;
     private String observacoes;
     private double valor;
     
@@ -26,28 +28,12 @@ public class Forma {
         this.forma = forma;
     }
 
-    public float getDimensao() {
+    public double getDimensao() {
         return dimensao;
     }
 
-    public void setDimensao(float dimensao) {
+    public void setDimensao(double dimensao) {
         this.dimensao = dimensao;
-    }
-
-    public String[] getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String[] tipo) {
-        this.tipo = tipo;
-    }
-
-    public String[] getSabor() {
-        return sabor;
-    }
-
-    public void setSabor(String[] sabor) {
-        this.sabor = sabor;
     }
 
     public String getObservacoes() {
@@ -64,5 +50,39 @@ public class Forma {
 
     public void setValor(double valor) {
         this.valor = valor;
+    }
+
+    public List<String> getTipos() {
+        return tipos;
+    }
+
+    public void setTipos(List<String> tipos) {
+        this.tipos = tipos;
+    }
+
+    public List<String> getSabores() {
+        return sabores;
+    }
+
+    public void setSabores(List<String> sabores) {
+        this.sabores = sabores;
+    }
+    
+    public void calculaValor(){
+        if(tipos.size()==1)
+            this.valor = dimensaoPorTipo(0);
+        else
+            for(int i = 0; i < tipos.size(); i++)
+                this.valor += dimensaoPorTipo(i);
+        this.valor = this.valor/2;   
+    }
+    
+    public double dimensaoPorTipo(int i){
+        if(tipos.get(i).equals("SIMPLES"))//Simples = 1 real Especial = 2 Premium = 3
+            return this.dimensao;
+        else if(tipos.get(i).equals("ESPECIAL"))
+            return this.dimensao*2;
+        else
+            return this.dimensao*3;
     }
 }

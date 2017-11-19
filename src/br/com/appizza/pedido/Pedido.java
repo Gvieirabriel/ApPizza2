@@ -16,7 +16,7 @@ public class Pedido {
 
     private int numeroPedido;
     private double valorTotal;
-    private List<Forma> pedidos;
+    private List<Forma> itens;
     private String status;
 
     public int getNumeroPedido() {
@@ -36,11 +36,11 @@ public class Pedido {
     }
 
     public List<Forma> getPedidos() {
-        return pedidos;
+        return itens;
     }
 
     public void setPedidos(List<Forma> pedidos) {
-        this.pedidos = pedidos;
+        this.itens = pedidos;
     }
 
     public String getStatus() {
@@ -49,6 +49,16 @@ public class Pedido {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+    
+    public double calculaPrecoTotal(){
+        for(int i = 0; i < itens.size(); i++){
+            if(itens.get(i).getValor() != 0)
+                valorTotal += itens.get(i).getValor();
+            else
+                return 0;//Retornar zero significa que alguma pizza não ta com valor calculado
+        }
+        return valorTotal;
     }
 
 }
