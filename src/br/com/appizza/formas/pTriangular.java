@@ -21,7 +21,7 @@ public class pTriangular extends Forma{
     
     public void setDimensaoCmQuadrados(double dimensaoCmQuadrados) {
         if(dimensaoCmQuadrados>100&&dimensaoCmQuadrados<1600)
-            super.setDimensao(Math.sqrt(dimensaoCmQuadrados));
+            super.setDimensao(Math.sqrt(dimensaoCmQuadrados/4));
         else
             System.out.println("Dimensao invalida");
     }
