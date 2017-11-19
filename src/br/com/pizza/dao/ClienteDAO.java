@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.appizza.formas;
+package br.com.pizza.dao;
 
 /**
  *
- * @author Gabriel
+ * @author Leticia
  */
-public class pTriangular extends Forma{
-    private int id;
+public class ClienteDAO {
+    
 }

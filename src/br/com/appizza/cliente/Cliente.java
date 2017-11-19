@@ -14,10 +14,23 @@ import java.util.List;
  */
 public class Cliente {
     
+    private int idCliente;
     private String nome;
     private String sobrenome;
     private String telefone;
     private List<Cliente> listaClientes = new ArrayList();
+
+    public Cliente(String nome) {
+        this.nome = nome;
+    }
+    
+    public int getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
+    }
 
     public String getNome() {
         return nome;
