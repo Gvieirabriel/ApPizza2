@@ -175,8 +175,10 @@ public class ManterCliente extends javax.swing.JFrame {
         ClienteDAO dao = new ClienteDAO();
         try {
             String nomeC = nome.getText();
-            cliente = new Cliente(nomeC);
-          //  dao.inserirCliente(cliente);
+            String sobrenomeC = sobrenome.getText();
+            int telefoneC = Integer.parseInt(telefone.getText());
+            cliente = new Cliente(nomeC,sobrenomeC,telefoneC);
+            dao.inserirCliente(cliente);
             JOptionPane.showMessageDialog(null, "Adicionado com sucesso");
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null,"Erro ao atualizar no banco de dados. E="+ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
@@ -187,7 +189,7 @@ public class ManterCliente extends javax.swing.JFrame {
     private void listarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarActionPerformed
         try {
             ClienteDAO dao = new ClienteDAO();
-      //      ModeloTabelaCliente.setLista(dao.listarCliente());
+            ModeloTabelaCliente.setLista(dao.listarCliente());
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null,"Erro ao conectar com o banco de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
         } 
@@ -199,7 +201,9 @@ public class ManterCliente extends javax.swing.JFrame {
             Cliente cliente = ModeloTabelaCliente.getCliente(linhaClicada);
             try{
                 cliente.setNome(nome.getText());
-             //   dao.atualizarCliente(cliente);
+                cliente.setSobrenome(sobrenome.getText());
+                cliente.setTelefone(Integer.parseInt(telefone.getText()));
+                dao.atualizarCliente(cliente);
             }catch (Exception ex) {
                 JOptionPane.showMessageDialog(null,"Erro ao atualizar no banco de dados. E="+ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             }
@@ -211,6 +215,8 @@ public class ManterCliente extends javax.swing.JFrame {
         linhaClicada = TabelaCliente.rowAtPoint(evt.getPoint());
         Cliente cliente = ModeloTabelaCliente.getCliente(linhaClicada);
         nome.setText(cliente.getNome());
+        sobrenome.setText(cliente.getSobrenome());
+        telefone.setText(Integer.toString(cliente.getTelefone()));
     }//GEN-LAST:event_tabelaClienteMouseClicked
 
     private void excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirActionPerformed
@@ -218,7 +224,7 @@ public class ManterCliente extends javax.swing.JFrame {
             ClienteDAO dao = new ClienteDAO();
             Cliente cliente = ModeloTabelaCliente.getCliente(linhaClicada);
             try{
-            //    dao.excluirCliente(cliente);
+                dao.excluirCliente(cliente);
             }catch (Exception ex) {
                 JOptionPane.showMessageDialog(null,"Erro ao atualizar no banco de dados. E="+ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             }

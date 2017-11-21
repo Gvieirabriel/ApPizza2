@@ -80,6 +80,8 @@ public class ModeloTabelaCliente extends AbstractTableModel{
         switch (columnIndex){
             case 0: return customer.getIdCliente();
             case 1: return customer.getNome();
+            case 2: return customer.getSobrenome();
+            case 3: return customer.getTelefone();
             default : return null;
         }
     }

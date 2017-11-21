@@ -17,13 +17,17 @@ public class Cliente {
     private int idCliente;
     private String nome;
     private String sobrenome;
-    private String telefone;
-    private List<Cliente> listaClientes = new ArrayList();
+    private int telefone;
 
-    public Cliente(String nome) {
-        this.nome = nome;
+    public Cliente() {
     }
-    
+
+    public Cliente(String nomeC, String sobrenomeC, int telefoneC) {
+        this.nome = nomeC;
+        this.sobrenome = sobrenomeC;
+        this.telefone = telefoneC;
+    }
+   
     public int getIdCliente() {
         return idCliente;
     }
@@ -48,20 +52,11 @@ public class Cliente {
         this.sobrenome = sobrenome;
     }
 
-    public String getTelefone() {
+    public int getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(String telefone) {
+    public void setTelefone(int telefone) {
         this.telefone = telefone;
-    }
-    
-    public List<Cliente> getListaClientes() {
-        return listaClientes;
-    }
-
-    public void setListaClientes(List<Cliente> listaClientes) {
-        this.listaClientes = listaClientes;
-    }     
-    
+    }    
 }

@@ -3,13 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Pichau/Documents/NetBeansProjects/ApPizza/src/br/com/appizza/formas/pTriangular.java</file>
-            <file>file:/C:/Users/Pichau/Documents/NetBeansProjects/ApPizza/src/br/com/appizza/formas/pRedonda.java</file>
-            <file>file:/C:/Users/Pichau/Documents/NetBeansProjects/ApPizza/src/br/com/appizza/cliente/Cliente.java</file>
-            <file>file:/C:/Users/Pichau/Documents/NetBeansProjects/ApPizza/src/br/com/appizza/main/ApPizza.java</file>
-            <file>file:/C:/Users/Pichau/Documents/NetBeansProjects/ApPizza/src/br/com/appizza/formas/Forma.java</file>
-            <file>file:/C:/Users/Pichau/Documents/NetBeansProjects/ApPizza/src/br/com/appizza/formas/pQuadrada.java</file>
-            <file>file:/C:/Users/Pichau/Documents/NetBeansProjects/ApPizza/src/br/com/appizza/pedido/Pedido.java</file>
+            <file>file:/C:/Users/Leticia/Desktop/java/ApPizza2/src/br/com/pizza/telas/ManterCliente.java</file>
+            <file>file:/C:/Users/Leticia/Desktop/java/ApPizza2/src/br/com/appizza/cliente/Cliente.java</file>
+            <file>file:/C:/Users/Leticia/Desktop/java/ApPizza2/src/br/com/pizza/dao/ClienteDAO.java</file>
+            <file>file:/C:/Users/Leticia/Desktop/java/ApPizza2/src/br/com/pizza/modelo/tabela/ModeloTabelaCliente.java</file>
         </group>
     </open-files>
 </project-private>
