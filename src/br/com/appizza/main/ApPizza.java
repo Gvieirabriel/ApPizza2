@@ -5,6 +5,8 @@
  */
 package br.com.appizza.main;
 
+import br.com.pizza.telas.ManterCliente;
+
 /**
  *
  * @author Gabriel
@@ -16,6 +18,8 @@ public class ApPizza {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        ManterCliente mc = new ManterCliente();
+        mc.setVisible(true);
     }
     
 }
