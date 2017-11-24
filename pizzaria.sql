@@ -30,12 +30,19 @@ create table Forma(
     primary key(idForma)
 );
 
+create table Pedido(
+	idPedido int not null auto_increment,
+    valorTotal float,
+    estado varchar(20),
+	primary key(idPedido)
+);
+
 create table ItemPedido(
 	idItemPedido int not null auto_increment,
     valorUnitario double,
-    codPedido int,
-    codCliente int,
-    codForma int,
+    codPedido int not null,
+    codCliente int not null,
+    codForma int not null,
 	primary key(idItemPedido),
     foreign key (codPedido) references Pedido(idPedido),
     foreign key (codCliente) references Cliente(idCLiente),
@@ -54,15 +61,8 @@ create table SaboresItemPedido(
 create table TiposItemPedido(
 	idTiposItemPedido int not null auto_increment,
 	codTipo int,
-    primary key(idSaboresItemPedido),
+    codItemPedido int,
+    primary key(idTiposItemPedido),
     foreign key (codTipo) references Tipo(idTipo),
 	foreign key (codItemPedido) references ItemPedido(idItemPedido)
 );
-
-create table Pedido(
-	idPedido int not null auto_increment,
-    valorTotal float,
-    estado varchar(20),
-	primary key(idPedido)
-);
-
