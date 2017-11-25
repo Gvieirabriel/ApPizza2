@@ -5,7 +5,7 @@
  */
 package br.com.pizza.dao;
 
-import br.com.appizza.cliente.Cliente;
+import br.com.appizza.sabor.Sabor;
 import br.com.pizza.conexao.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,14 +18,13 @@ import java.util.List;
  *
  * @author Leticia
  */
-public class ClienteDAO {
-    private final String incluir = "INSERT INTO cliente(nome,sobrenome,telefone) VALUES (?,?,?)";
-    private final String atualizar = "UPDATE cliente SET nome = ?, sobrenome = ?, telefone = ? WHERE idCliente = ?";
-    private final String excluir = "DELETE FROM cliente WHERE idCliente = ?";
-    private final String listar = "SELECT cliente.idCliente, cliente.nome, cliente.sobrenome, cliente.telefone FROM cliente";
-    private final String pesquisa = "SELECT cliente.nome FROM cliente WHERE cliente.sobrenome = ?";
+public class SaborDAO {
+    private final String incluir = "INSERT INTO sabor(nome) VALUES (?)";
+    private final String atualizar = "UPDATE sabor SET nome = ? WHERE idSabor = ?";
+    private final String excluir = "DELETE FROM sabor WHERE idSabor = ?";
+    private final String listar = "SELECT sabor.idSabor, sabor.nome FROM sabor";
     
-    public void inserirCliente(Cliente cliente) throws SQLException{
+    public void inserirSabor(Sabor sabor) throws SQLException{
         Connection con = null;
         PreparedStatement stmt1 = null;
         try{
@@ -33,35 +32,31 @@ public class ClienteDAO {
             con.setAutoCommit(false);
             
             stmt1 = con.prepareStatement(incluir,PreparedStatement.RETURN_GENERATED_KEYS);
-            stmt1.setString(1, cliente.getNome());
-            stmt1.setString(2, cliente.getSobrenome());
-            stmt1.setInt(3,cliente.getTelefone());
+            stmt1.setString(1, sabor.getNome());
             stmt1.executeUpdate();
             con.commit();
         }catch (SQLException ex) {
-            throw new RuntimeException("Erro ao inserir o Cliente no banco de dados. Origem="+ex.getMessage());
+            throw new RuntimeException("Erro ao inserir o Sabor no banco de dados. Origem="+ex.getMessage());
         } finally{
             try{stmt1.close();}catch(Exception ex){System.out.println("Erro ao fechar stmt1. Ex="+ex.getMessage());}
             try{con.close();}catch(Exception ex){System.out.println("Erro ao fechar conexão. Ex="+ex.getMessage());}
         }
-    }
+    } 
     
-    public List<Cliente> listarCliente() throws SQLException, Exception{
+    public List<Sabor> listarSabor() throws SQLException, Exception{
         Connection con = null;
         PreparedStatement stmt1 = null;
         ResultSet rs = null;
-        List<Cliente> lista = new ArrayList();
+        List<Sabor> lista = new ArrayList();
         try{
             con = ConnectionFactory.getConnection();
             stmt1 = con.prepareStatement(listar);
             rs = stmt1.executeQuery();
             while(rs.next()){
-                Cliente cliente = new Cliente();
-                cliente.setIdCliente(rs.getInt("idCliente"));
-                cliente.setNome(rs.getString("nome"));
-                cliente.setSobrenome(rs.getString("sobrenome"));
-                cliente.setTelefone(rs.getInt("telefone"));
-                lista.add(cliente);
+                Sabor sabor = new Sabor();
+                sabor.setIdSabor(rs.getInt("idSabor"));
+                sabor.setNome(rs.getString("nome"));
+                lista.add(sabor);
             }
             return lista;
         }catch (SQLException ex) {
@@ -73,16 +68,14 @@ public class ClienteDAO {
         }
     }
     
-    public void atualizarCliente(Cliente cliente){
+    public void atualizarSabor(Sabor sabor){
         Connection con = null;
         PreparedStatement stmt = null;
         try{
             con = ConnectionFactory.getConnection();
             stmt = con.prepareStatement(atualizar);
-            stmt.setString(1,cliente.getNome());
-            stmt.setString(2,cliente.getSobrenome());
-            stmt.setInt(3,cliente.getTelefone());
-            stmt.setInt(4,cliente.getIdCliente());
+            stmt.setString(1,sabor.getNome());
+            stmt.setInt(2,sabor.getIdSabor());
             stmt.executeUpdate();
         }catch (SQLException e) {
             throw new RuntimeException(e);
@@ -92,13 +85,13 @@ public class ClienteDAO {
         }
     }
     
-    public void excluirCliente(Cliente cliente) throws SQLException{
+    public void excluirSabor(Sabor sabor) throws SQLException{
         Connection con = null;
         PreparedStatement stmt = null;
         try{
             con = ConnectionFactory.getConnection();
             stmt = con.prepareStatement(excluir);
-            stmt.setInt(1,cliente.getIdCliente());
+            stmt.setInt(1,sabor.getIdSabor());
             stmt.executeUpdate();
         }catch (SQLException e) {
             throw new RuntimeException(e);
@@ -106,29 +99,5 @@ public class ClienteDAO {
             try{stmt.close();}catch(Exception ex){System.out.println("Erro ao fechar stmt. Ex="+ex.getMessage());}
             try{con.close();}catch(Exception ex){System.out.println("Erro ao fechar conexÃ£o. Ex="+ex.getMessage());}
         }
-    }
-    
-    public String pesquisa(String sobrenome){
-        Connection con = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        String nome = null;
-        try{
-            con = ConnectionFactory.getConnection();
-            stmt = con.prepareStatement(pesquisa);
-            stmt.setString(1,sobrenome);
-            rs = stmt.executeQuery();
-            while(rs.next()){
-                nome = rs.getString(1);
-            }
-            return nome;          
-        }catch (SQLException ex) {
-            throw new RuntimeException("Erro listar. Origem="+ex.getMessage());
-        }finally{
-            try{rs.close();}catch(Exception ex){System.out.println("Erro ao fechar result set. Ex="+ex.getMessage());}
-            try{stmt.close();}catch(Exception ex){System.out.println("Erro ao fechar stmt. Ex="+ex.getMessage());}
-            try{con.close();}catch(Exception ex){System.out.println("Erro ao fechar conexÃ£o. Ex="+ex.getMessage());}
-        }
-       
     }
 }
