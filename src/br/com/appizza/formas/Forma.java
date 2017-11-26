@@ -5,6 +5,7 @@
  */
 package br.com.appizza.formas;
 
+import br.com.appizza.sabor.Sabor;
 import java.util.List;
 
 /**
@@ -12,9 +13,8 @@ import java.util.List;
  * @author Gabriel
  */
 public class Forma {
-
-    private List<String> tipos;
-    private List<String> sabores;
+    private List<Tipo> tipos;
+    private List<Sabor> sabores;
     private String forma;
     private double dimensao;
     private double valor;
@@ -43,19 +43,19 @@ public class Forma {
         this.valor = valor;
     }
 
-    public List<String> getTipos() {
+    public List<Tipo> getTipos() {
         return tipos;
     }
 
-    public void setTipos(List<String> tipos) {
+    public void setTipos(List<Tipo> tipos) {
         this.tipos = tipos;
     }
 
-    public List<String> getSabores() {
+    public List<Sabor> getSabores() {
         return sabores;
     }
 
-    public void setSabores(List<String> sabores) {
+    public void setSabores(List<Sabor> sabores) {
         this.sabores = sabores;
     }
     

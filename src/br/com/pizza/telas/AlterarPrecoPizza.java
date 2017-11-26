@@ -61,7 +61,18 @@ public class AlterarPrecoPizza extends javax.swing.JFrame {
 
         preco.setText("Preço (cm²):");
 
+        precoCm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                precoCmActionPerformed(evt);
+            }
+        });
+
         salvar.setText("Salvar");
+        salvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salvarActionPerformed(evt);
+            }
+        });
 
         cancelar.setText("Cancelar");
 
@@ -122,6 +133,14 @@ public class AlterarPrecoPizza extends javax.swing.JFrame {
     private void tipoPizzaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tipoPizzaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tipoPizzaActionPerformed
+
+    private void precoCmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precoCmActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_precoCmActionPerformed
+
+    private void salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_salvarActionPerformed
 
     /**
      * @param args the command line arguments

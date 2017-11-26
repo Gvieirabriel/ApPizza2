@@ -6,6 +6,8 @@
 package br.com.appizza.pedido;
 
 import br.com.appizza.formas.Forma;
+import br.com.appizza.formas.Tipo;
+import br.com.appizza.sabor.Sabor;
 import java.util.List;
 
 /**
@@ -13,7 +15,6 @@ import java.util.List;
  * @author Gabriel
  */
 public class Pedido {
-
     private int numeroPedido;
     private double valorTotal;
     private List<Forma> itens;
