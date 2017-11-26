@@ -152,7 +152,7 @@ public class ClienteDAO {
                 c.setIdCliente(rs.getInt("idCliente"));
                 c.setNome(rs.getString("nome"));
                 c.setSobrenome(rs.getString("sobrenome"));
-                c.setTelefone(rs.getString("telefone"));;
+                c.setTelefone(rs.getString("telefone"));
                 lista.add(c);
             }
             return lista;         

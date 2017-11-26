@@ -21,6 +21,7 @@ public class TipoDAO {
     private final String atualizar = "UPDATE tipo SET tipo = ?, valorCmQuadrado = ? WHERE idTipo = ?";
     private final String excluir = "DELETE FROM tipo WHERE idTipo = ?";
     private final String pesquisaTipo = "SELECT tipo.tipo FROM tipo";
+    private final String atualizarValorPizzaCm = "UPDATE tipo set tipo.valorCmQuadrado = ? where tipo.tipo = ?";
     
     public void inserirTipo(Tipo tipo) throws SQLException{
         Connection con = null;
@@ -35,7 +36,7 @@ public class TipoDAO {
             stmt1.executeUpdate();
             con.commit();
         }catch (SQLException ex) {
-            throw new RuntimeException("Erro ao inserir o Cliente no banco de dados. Origem="+ex.getMessage());
+            throw new RuntimeException("Erro ao inserir o Tipo no banco de dados. Origem="+ex.getMessage());
         } finally{
             try{stmt1.close();}catch(Exception ex){System.out.println("Erro ao fechar stmt1. Ex="+ex.getMessage());}
             try{con.close();}catch(Exception ex){System.out.println("Erro ao fechar conexão. Ex="+ex.getMessage());}
@@ -96,4 +97,22 @@ public class TipoDAO {
             try{con.close();}catch(Exception ex){System.out.println("Erro ao fechar conexÃ£o. Ex="+ex.getMessage());}
         }
     }
+    
+    public void atualizarValorPizzaCm(float valorCmQuadrado) throws SQLException{
+        Connection con = null;
+        PreparedStatement stmt = null;
+        try{
+            con = ConnectionFactory.getConnection();
+            stmt = con.prepareStatement(atualizarValorPizzaCm);
+                        
+            stmt.setFloat(1,valorCmQuadrado);
+            stmt.executeUpdate();
+            
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally{
+            try{stmt.close();}catch(Exception ex){System.out.println("Erro ao fechar stmt. Ex="+ex.getMessage());}
+            try{con.close();}catch(Exception ex){System.out.println("Erro ao fechar conexÃ£o. Ex="+ex.getMessage());}
+        }
+    }   
 }
