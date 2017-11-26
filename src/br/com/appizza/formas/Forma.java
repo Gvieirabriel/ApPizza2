@@ -13,7 +13,6 @@ import java.util.List;
  * @author Gabriel
  */
 public class Forma {
-    private List<Tipo> tipos;
     private List<Sabor> sabores;
     private String forma;
     private double dimensao;
@@ -43,14 +42,6 @@ public class Forma {
         this.valor = valor;
     }
 
-    public List<Tipo> getTipos() {
-        return tipos;
-    }
-
-    public void setTipos(List<Tipo> tipos) {
-        this.tipos = tipos;
-    }
-
     public List<Sabor> getSabores() {
         return sabores;
     }
@@ -60,18 +51,18 @@ public class Forma {
     }
     
     public void calculaValor(){
-        if(tipos.size()==1)
+        if(sabores.size()==1)
             this.valor = dimensaoPorTipo(0);
         else
-            for(int i = 0; i < tipos.size(); i++)
+            for(int i = 0; i < sabores.size(); i++)
                 this.valor += dimensaoPorTipo(i);
         this.valor = this.valor/2;   
     }
     
     public double dimensaoPorTipo(int i){
-        if(tipos.get(i).equals("SIMPLES"))//Simples = 1 real Especial = 2 Premium = 3
+        if(sabores.get(i).getCodTipo() == 1)//Simples = 1 real Especial = 2 Premium = 3
             return this.dimensao;
-        else if(tipos.get(i).equals("ESPECIAL"))
+        else if(sabores.get(i).getCodTipo() == 2)
             return this.dimensao*2;
         else
             return this.dimensao*3;
