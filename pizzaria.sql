@@ -19,6 +19,7 @@ create table Sabor(
 
 create table Tipo(
 	idTipo int not null auto_increment,
+    valorCmQuadrado float,
 	tipo varchar(50),
     primary key(idTipo)
 );
