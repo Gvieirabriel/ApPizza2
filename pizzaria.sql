@@ -11,17 +11,19 @@ create table Cliente(
     
 );
 
-create table Sabor(
-	idSabor int not null auto_increment,
-	nome varchar(40),
-    primary key(idSabor)
-);
-
 create table Tipo(
 	idTipo int not null auto_increment,
     valorCmQuadrado float,
 	tipo varchar(50),
     primary key(idTipo)
+);
+
+create table Sabor(
+	idSabor int not null auto_increment,
+	nome varchar(40),
+    codTipo int not null,
+    foreign key (codTipo) references Tipo(idTipo),
+    primary key(idSabor)
 );
 
 create table Forma(
@@ -56,14 +58,5 @@ create table SaboresItemPedido(
     codItemPedido int,
     primary key(idSaboresItemPedido),
     foreign key (codSabor) references Sabor(idSabor),
-	foreign key (codItemPedido) references ItemPedido(idItemPedido)
-);
-
-create table TiposItemPedido(
-	idTiposItemPedido int not null auto_increment,
-	codTipo int,
-    codItemPedido int,
-    primary key(idTiposItemPedido),
-    foreign key (codTipo) references Tipo(idTipo),
 	foreign key (codItemPedido) references ItemPedido(idItemPedido)
 );
