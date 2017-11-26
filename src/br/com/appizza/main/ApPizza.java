@@ -5,7 +5,7 @@
  */
 package br.com.appizza.main;
 
-import br.com.pizza.telas.ManterCliente;
+import br.com.pizza.telas.TelaInicial;
 
 /**
  *
@@ -18,8 +18,9 @@ public class ApPizza {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        ManterCliente mc = new ManterCliente();
-        mc.setVisible(true);
+        TelaInicial t = new TelaInicial();
+        t.setVisible(true);
+        t.setTitle("ApPizza");
     }
     
 }
