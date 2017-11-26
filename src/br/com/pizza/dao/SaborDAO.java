@@ -19,7 +19,7 @@ import java.util.List;
  * @author Leticia
  */
 public class SaborDAO {
-    private final String incluir = "INSERT INTO sabor(nome) VALUES (?)";
+    private final String incluir = "INSERT INTO sabor(nome,codTipo) VALUES (?,?)";
     private final String atualizar = "UPDATE sabor SET nome = ? WHERE idSabor = ?";
     private final String excluir = "DELETE FROM sabor WHERE idSabor = ?";
     private final String listar = "SELECT sabor.idSabor, sabor.nome FROM sabor";
@@ -30,9 +30,9 @@ public class SaborDAO {
         try{
             con = ConnectionFactory.getConnection();
             con.setAutoCommit(false);
-            
             stmt1 = con.prepareStatement(incluir,PreparedStatement.RETURN_GENERATED_KEYS);
             stmt1.setString(1, sabor.getNome());
+            stmt1.setInt(2, sabor.getCodTipo());
             stmt1.executeUpdate();
             con.commit();
         }catch (SQLException ex) {

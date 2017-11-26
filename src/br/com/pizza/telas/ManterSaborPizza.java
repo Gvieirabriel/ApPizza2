@@ -43,6 +43,8 @@ public class ManterSaborPizza extends javax.swing.JFrame {
         limpar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaSabor = new javax.swing.JTable();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        sabor1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -99,6 +101,10 @@ public class ManterSaborPizza extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tabelaSabor);
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Simples", "Especial", "Premium" }));
+
+        sabor1.setText("Tipo:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -114,15 +120,19 @@ public class ManterSaborPizza extends javax.swing.JFrame {
                                 .addComponent(excluir)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(limpar))
+                            .addComponent(jLabel1)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(sabor)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(sabor)
+                                    .addComponent(sabor1))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(nome, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
                                 .addComponent(salvar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(atualizar))
-                            .addComponent(jLabel1)))
+                                .addComponent(atualizar))))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -139,7 +149,11 @@ public class ManterSaborPizza extends javax.swing.JFrame {
                     .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(salvar)
                     .addComponent(atualizar))
-                .addGap(32, 32, 32)
+                .addGap(1, 1, 1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sabor1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(listar)
                     .addComponent(excluir)
@@ -158,7 +172,7 @@ public class ManterSaborPizza extends javax.swing.JFrame {
         SaborDAO dao = new SaborDAO();
         try {
             String nomeS = nome.getText();
-            sabor = new Sabor(nomeS);
+            sabor = new Sabor(nomeS,jComboBox1.getSelectedIndex());
             dao.inserirSabor(sabor);
             JOptionPane.showMessageDialog(null, "Adicionado com sucesso");
         } catch (Exception ex) {
@@ -260,12 +274,14 @@ public class ManterSaborPizza extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton atualizar;
     private javax.swing.JButton excluir;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton limpar;
     private javax.swing.JButton listar;
     private javax.swing.JTextField nome;
     private javax.swing.JLabel sabor;
+    private javax.swing.JLabel sabor1;
     private javax.swing.JButton salvar;
     private javax.swing.JTable tabelaSabor;
     // End of variables declaration//GEN-END:variables

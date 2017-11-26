@@ -12,12 +12,14 @@ package br.com.appizza.sabor;
 public class Sabor {
     private int idSabor;
     private String nome;  
+    private int codTipo;
     
     public Sabor() {
     }
 
-    public Sabor(String nomeS) {
+    public Sabor(String nomeS,int codT) {
         this.nome = nomeS;
+        this.codTipo = codT;
     }
 
     public int getIdSabor() {
@@ -34,6 +36,14 @@ public class Sabor {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public int getCodTipo() {
+        return codTipo;
+    }
+
+    public void setCodTipo(int codTipo) {
+        this.codTipo = codTipo;
     }
     
     
