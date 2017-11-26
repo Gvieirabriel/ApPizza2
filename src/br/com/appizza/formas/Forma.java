@@ -17,7 +17,6 @@ public class Forma {
     private List<String> sabores;
     private String forma;
     private double dimensao;
-    private String observacoes;
     private double valor;
     
     public String getForma() {
@@ -34,14 +33,6 @@ public class Forma {
 
     public void setDimensao(double dimensao) {
         this.dimensao = dimensao;
-    }
-
-    public String getObservacoes() {
-        return observacoes;
-    }
-
-    public void setObservacoes(String observacoes) {
-        this.observacoes = observacoes;
     }
 
     public double getValor() {
