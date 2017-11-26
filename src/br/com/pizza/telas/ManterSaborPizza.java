@@ -195,11 +195,16 @@ public class ManterSaborPizza extends javax.swing.JFrame {
             Sabor sabor = ModeloTabelaSabor.getSabor(linhaClicada);
             try{
                 sabor.setNome(nome.getText());
+                sabor.setCodTipo(jComboBox1.getSelectedIndex());
                 dao.atualizarSabor(sabor);
             }catch (Exception ex) {
                 JOptionPane.showMessageDialog(null,"Erro ao atualizar no banco de dados. E="+ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             }
-            ModeloTabelaSabor.fireTableRowsUpdated(linhaClicada, linhaClicada);
+            try {
+            ModeloTabelaSabor.setLista(dao.listarSabor());
+            } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null,"Erro ao conectar com o banco de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
+            } 
         } 
     }//GEN-LAST:event_atualizarActionPerformed
 

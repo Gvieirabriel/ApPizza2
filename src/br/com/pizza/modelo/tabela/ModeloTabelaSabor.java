@@ -15,7 +15,7 @@ import javax.swing.table.AbstractTableModel;
  * @author Leticia
  */
 public class ModeloTabelaSabor extends AbstractTableModel{
-    private String[] colunas = new String[]{"Id","Sabor"};
+    private String[] colunas = new String[]{"Id","Sabor","Tipo"};
     private List<Sabor> lista = new ArrayList();
     
     public ModeloTabelaSabor(){
@@ -83,6 +83,13 @@ public class ModeloTabelaSabor extends AbstractTableModel{
         switch (columnIndex){
             case 0: return customer.getIdSabor();
             case 1: return customer.getNome();
+            case 2:
+                if(customer.getCodTipo()==1)
+                    return "Simples";
+                else if(customer.getCodTipo()==2)
+                    return "Especial";
+                else
+                    return "Premium";
             default : return null;
         }
     }

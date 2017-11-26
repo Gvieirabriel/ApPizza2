@@ -20,9 +20,9 @@ import java.util.List;
  */
 public class SaborDAO {
     private final String incluir = "INSERT INTO sabor(nome,codTipo) VALUES (?,?)";
-    private final String atualizar = "UPDATE sabor SET nome = ? WHERE idSabor = ?";
+    private final String atualizar = "UPDATE sabor SET nome = ?, codTipo = ? WHERE idSabor = ?";
     private final String excluir = "DELETE FROM sabor WHERE idSabor = ?";
-    private final String listar = "SELECT sabor.idSabor, sabor.nome FROM sabor";
+    private final String listar = "SELECT sabor.idSabor, sabor.nome, sabor.codTipo FROM sabor";
     
     public void inserirSabor(Sabor sabor) throws SQLException{
         Connection con = null;
@@ -32,7 +32,7 @@ public class SaborDAO {
             con.setAutoCommit(false);
             stmt1 = con.prepareStatement(incluir,PreparedStatement.RETURN_GENERATED_KEYS);
             stmt1.setString(1, sabor.getNome());
-            stmt1.setInt(2, sabor.getCodTipo());
+            stmt1.setInt(2, sabor.getCodTipo()+1);
             stmt1.executeUpdate();
             con.commit();
         }catch (SQLException ex) {
@@ -54,6 +54,7 @@ public class SaborDAO {
             rs = stmt1.executeQuery();
             while(rs.next()){
                 Sabor sabor = new Sabor();
+                sabor.setCodTipo(rs.getInt("codTipo"));
                 sabor.setIdSabor(rs.getInt("idSabor"));
                 sabor.setNome(rs.getString("nome"));
                 lista.add(sabor);
@@ -75,7 +76,8 @@ public class SaborDAO {
             con = ConnectionFactory.getConnection();
             stmt = con.prepareStatement(atualizar);
             stmt.setString(1,sabor.getNome());
-            stmt.setInt(2,sabor.getIdSabor());
+            stmt.setInt(2,sabor.getCodTipo()+1);
+            stmt.setInt(3,sabor.getIdSabor());
             stmt.executeUpdate();
         }catch (SQLException e) {
             throw new RuntimeException(e);
