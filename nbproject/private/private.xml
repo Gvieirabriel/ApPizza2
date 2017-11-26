@@ -2,6 +2,16 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/Pichau/Documents/NetBeansProjects/ApPizza/src/br/com/appizza/formas/Tipo.java</file>
+            <file>file:/C:/Users/Pichau/Documents/NetBeansProjects/ApPizza/src/br/com/appizza/cliente/Cliente.java</file>
+            <file>file:/C:/Users/Pichau/Documents/NetBeansProjects/ApPizza/src/br/com/appizza/sabor/Sabor.java</file>
+            <file>file:/C:/Users/Pichau/Documents/NetBeansProjects/ApPizza/src/br/com/pizza/telas/AlterarPrecoPizza.java</file>
+            <file>file:/C:/Users/Pichau/Documents/NetBeansProjects/ApPizza/src/br/com/appizza/main/ApPizza.java</file>
+            <file>file:/C:/Users/Pichau/Documents/NetBeansProjects/ApPizza/src/br/com/appizza/formas/Forma.java</file>
+            <file>file:/C:/Users/Pichau/Documents/NetBeansProjects/ApPizza/src/br/com/pizza/dao/SaborDAO.java</file>
+            <file>file:/C:/Users/Pichau/Documents/NetBeansProjects/ApPizza/src/br/com/pizza/dao/TipoDAO.java</file>
+            <file>file:/C:/Users/Pichau/Documents/NetBeansProjects/ApPizza/src/br/com/appizza/pedido/Pedido.java</file>
+        </group>
     </open-files>
 </project-private>
