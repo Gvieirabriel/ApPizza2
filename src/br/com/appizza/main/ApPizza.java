@@ -5,15 +5,12 @@
  */
 package br.com.appizza.main;
 
-import br.com.appizza.sabor.Sabor;
-import br.com.pizza.conexao.ConnectionFactory;
+import br.com.appizza.formas.Tipo;
+import br.com.pizza.dao.TipoDAO;
 import br.com.pizza.telas.TelaInicial;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -29,52 +26,31 @@ public class ApPizza {
         TelaInicial t = new TelaInicial();
         t.setVisible(true);
         t.setTitle("ApPizza");
-        if(!verificaTipos())
-          cadastraTipos();
-    }
-
-    private static void cadastraTipos() {
-        Connection con = null;
-        PreparedStatement stmt1 = null;
-        try{
-            con = ConnectionFactory.getConnection();
-            con.setAutoCommit(false);
-            String incluirTipos = "INSERT INTO Tipo(tipo) VALUES (?)";
-            stmt1 = con.prepareStatement(incluirTipos,PreparedStatement.RETURN_GENERATED_KEYS);
-            stmt1.setString(1, "Simples");
-            stmt1.executeUpdate();
-            stmt1.setString(1, "Especial");
-            stmt1.executeUpdate();
-            stmt1.setString(1, "Premium");
-            stmt1.executeUpdate();
-            con.commit();
-        }catch (SQLException ex) {
-            throw new RuntimeException("Erro ao inserir o Sabor no banco de dados. Origem="+ex.getMessage());
-        } finally{
-            try{stmt1.close();}catch(Exception ex){System.out.println("Erro ao fechar stmt1. Ex="+ex.getMessage());}
-            try{con.close();}catch(Exception ex){System.out.println("Erro ao fechar conexão. Ex="+ex.getMessage());}
+      
+        try {
+            if(!verificaTipos())
+              cadastraTipos();
+        } catch (SQLException ex) {
+            Logger.getLogger(ApPizza.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    private static void cadastraTipos() throws SQLException {
+        TipoDAO tipoDAO = new TipoDAO();
+        Tipo tipo = new Tipo();
+        tipo.setTipo("Simples");
+        tipoDAO.inserirTipo(tipo);
+        tipo = new Tipo();
+        tipo.setTipo("Especial");
+        tipoDAO.inserirTipo(tipo);
+        tipo = new Tipo();
+        tipo.setTipo("Premium");
+        tipoDAO.inserirTipo(tipo);
+    }
+
     private static boolean verificaTipos() {
-        Connection con = null;
-        PreparedStatement stmt1 = null;
-        ResultSet rs = null;
-        try{
-            con = ConnectionFactory.getConnection();
-            String pesquisaTipos = "SELECT tipo.tipo FROM tipo";
-            stmt1 = con.prepareStatement(pesquisaTipos);
-            rs = stmt1.executeQuery();
-            if(rs.next()){
-                return true;
-            }
-            return false;
-        }catch (SQLException ex) {
-            throw new RuntimeException("Erro listar. Origem="+ex.getMessage());
-        }finally{
-            try{rs.close();}catch(Exception ex){System.out.println("Erro ao fechar result set. Ex="+ex.getMessage());}
-            try{stmt1.close();}catch(Exception ex){System.out.println("Erro ao fechar stmt. Ex="+ex.getMessage());}
-            try{con.close();}catch(Exception ex){System.out.println("Erro ao fechar conexão. Ex="+ex.getMessage());}
-        }}
+        TipoDAO tipoDAO = new TipoDAO();
+        return tipoDAO.tipoTemTipo();
+    }
     
 }

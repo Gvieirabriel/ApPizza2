@@ -9,6 +9,7 @@ import br.com.appizza.formas.Tipo;
 import br.com.pizza.conexao.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -19,6 +20,7 @@ public class TipoDAO {
     private final String incluir = "INSERT INTO Tipo(tipo,valorCmQuadrado) VALUES (?,?)";
     private final String atualizar = "UPDATE tipo SET tipo = ?, valorCmQuadrado = ? WHERE idTipo = ?";
     private final String excluir = "DELETE FROM tipo WHERE idTipo = ?";
+    private final String pesquisaTipo = "SELECT tipo.tipo FROM tipo";
     
     public void inserirTipo(Tipo tipo) throws SQLException{
         Connection con = null;
@@ -36,6 +38,27 @@ public class TipoDAO {
             throw new RuntimeException("Erro ao inserir o Cliente no banco de dados. Origem="+ex.getMessage());
         } finally{
             try{stmt1.close();}catch(Exception ex){System.out.println("Erro ao fechar stmt1. Ex="+ex.getMessage());}
+            try{con.close();}catch(Exception ex){System.out.println("Erro ao fechar conexão. Ex="+ex.getMessage());}
+        }
+    }
+    
+    public boolean tipoTemTipo(){
+        Connection con = null;
+        PreparedStatement stmt1 = null;
+        ResultSet rs = null;
+        try{
+            con = ConnectionFactory.getConnection();
+            stmt1 = con.prepareStatement(pesquisaTipo);
+            rs = stmt1.executeQuery();
+            if(rs.next()){
+                return true;
+            }
+            return false;
+        }catch (SQLException ex) {
+            throw new RuntimeException("Erro listar. Origem="+ex.getMessage());
+        }finally{
+            try{rs.close();}catch(Exception ex){System.out.println("Erro ao fechar result set. Ex="+ex.getMessage());}
+            try{stmt1.close();}catch(Exception ex){System.out.println("Erro ao fechar stmt. Ex="+ex.getMessage());}
             try{con.close();}catch(Exception ex){System.out.println("Erro ao fechar conexão. Ex="+ex.getMessage());}
         }
     }
