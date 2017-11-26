@@ -23,7 +23,8 @@ public class ClienteDAO {
     private final String atualizar = "UPDATE cliente SET nome = ?, sobrenome = ?, telefone = ? WHERE idCliente = ?";
     private final String excluir = "DELETE FROM cliente WHERE idCliente = ?";
     private final String listar = "SELECT cliente.idCliente, cliente.nome, cliente.sobrenome, cliente.telefone FROM cliente";
-    private final String pesquisa = "SELECT cliente.nome FROM cliente WHERE cliente.sobrenome = ?";
+    private final String pesquisa = "SELECT cliente.idCliente, cliente.nome, cliente.sobrenome, cliente.telefone FROM cliente WHERE cliente.sobrenome LIKE ?";
+    private final String pesquisaTel = "SELECT cliente.idCliente, cliente.nome, cliente.sobrenome, cliente.telefone FROM cliente WHERE cliente.telefone LIKE ?";
     
     public void inserirCliente(Cliente cliente) throws SQLException{
         Connection con = null;
@@ -33,9 +34,9 @@ public class ClienteDAO {
             con.setAutoCommit(false);
             
             stmt1 = con.prepareStatement(incluir,PreparedStatement.RETURN_GENERATED_KEYS);
-            stmt1.setString(1, cliente.getNome());
-            stmt1.setString(2, cliente.getSobrenome());
-            stmt1.setInt(3,cliente.getTelefone());
+            stmt1.setString(1,cliente.getNome());
+            stmt1.setString(2,cliente.getSobrenome());
+            stmt1.setString(3,cliente.getTelefone());
             stmt1.executeUpdate();
             con.commit();
         }catch (SQLException ex) {
@@ -60,7 +61,7 @@ public class ClienteDAO {
                 cliente.setIdCliente(rs.getInt("idCliente"));
                 cliente.setNome(rs.getString("nome"));
                 cliente.setSobrenome(rs.getString("sobrenome"));
-                cliente.setTelefone(rs.getInt("telefone"));
+                cliente.setTelefone(rs.getString("telefone"));
                 lista.add(cliente);
             }
             return lista;
@@ -81,7 +82,7 @@ public class ClienteDAO {
             stmt = con.prepareStatement(atualizar);
             stmt.setString(1,cliente.getNome());
             stmt.setString(2,cliente.getSobrenome());
-            stmt.setInt(3,cliente.getTelefone());
+            stmt.setString(3,cliente.getTelefone());
             stmt.setInt(4,cliente.getIdCliente());
             stmt.executeUpdate();
         }catch (SQLException e) {
@@ -108,20 +109,25 @@ public class ClienteDAO {
         }
     }
     
-    public String pesquisa(String sobrenome){
+    public List<Cliente> pesquisa(String sobrenome){
         Connection con = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String nome = null;
         try{
             con = ConnectionFactory.getConnection();
             stmt = con.prepareStatement(pesquisa);
-            stmt.setString(1,sobrenome);
+            stmt.setString(1,"%"+sobrenome+"%");
             rs = stmt.executeQuery();
+            List<Cliente> lista = new ArrayList();
             while(rs.next()){
-                nome = rs.getString(1);
+                Cliente c = new Cliente();
+                c.setIdCliente(rs.getInt("idCliente"));
+                c.setNome(rs.getString("nome"));
+                c.setSobrenome(rs.getString("sobrenome"));
+                c.setTelefone(rs.getString("telefone"));
+                lista.add(c);
             }
-            return nome;          
+            return lista;          
         }catch (SQLException ex) {
             throw new RuntimeException("Erro listar. Origem="+ex.getMessage());
         }finally{
@@ -129,6 +135,33 @@ public class ClienteDAO {
             try{stmt.close();}catch(Exception ex){System.out.println("Erro ao fechar stmt. Ex="+ex.getMessage());}
             try{con.close();}catch(Exception ex){System.out.println("Erro ao fechar conexÃ£o. Ex="+ex.getMessage());}
         }
-       
+    }
+
+    public List<Cliente> pesquisaTel(String tel) {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try{
+            con = ConnectionFactory.getConnection();
+            stmt = con.prepareStatement(pesquisaTel);
+            stmt.setString(1,tel);
+            rs = stmt.executeQuery();
+            List<Cliente> lista = new ArrayList();
+            while(rs.next()){
+                Cliente c = new Cliente();
+                c.setIdCliente(rs.getInt("idCliente"));
+                c.setNome(rs.getString("nome"));
+                c.setSobrenome(rs.getString("sobrenome"));
+                c.setTelefone(rs.getString("telefone"));;
+                lista.add(c);
+            }
+            return lista;         
+        }catch (SQLException ex) {
+            throw new RuntimeException("Erro listar. Origem="+ex.getMessage());
+        }finally{
+            try{rs.close();}catch(Exception ex){System.out.println("Erro ao fechar result set. Ex="+ex.getMessage());}
+            try{stmt.close();}catch(Exception ex){System.out.println("Erro ao fechar stmt. Ex="+ex.getMessage());}
+            try{con.close();}catch(Exception ex){System.out.println("Erro ao fechar conexÃ£o. Ex="+ex.getMessage());}
+        }
     }
 }

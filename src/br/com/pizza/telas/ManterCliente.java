@@ -4,6 +4,8 @@ package br.com.pizza.telas;
 import br.com.pizza.dao.ClienteDAO;
 import br.com.appizza.cliente.Cliente;
 import br.com.pizza.modelo.tabela.ModeloTabelaCliente;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
 
@@ -42,6 +44,8 @@ public class ManterCliente extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         pesq = new javax.swing.JTextField();
         pesquisar = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
 
         jTextField1.setText("jTextField1");
 
@@ -117,6 +121,15 @@ public class ManterCliente extends javax.swing.JFrame {
             }
         });
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sobrenome", "Telefone" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("Filtro");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -127,16 +140,6 @@ public class ManterCliente extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 502, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(listar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(excluir)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(limpa)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(pesq, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -154,7 +157,22 @@ public class ManterCliente extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(cadastrarCliente)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(atualizar)))
+                                .addComponent(atualizar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(listar)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(excluir)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(limpa)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel4))
+                                    .addComponent(jLabel5))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(pesq, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(pesquisar)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -177,7 +195,11 @@ public class ManterCliente extends javax.swing.JFrame {
                     .addComponent(telefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cadastrarCliente)
                     .addComponent(atualizar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(listar)
                     .addComponent(excluir)
@@ -203,7 +225,7 @@ public class ManterCliente extends javax.swing.JFrame {
         try {
             String nomeC = nome.getText();
             String sobrenomeC = sobrenome.getText();
-            int telefoneC = Integer.parseInt(telefone.getText());
+            String telefoneC = telefone.getText();
             cliente = new Cliente(nomeC,sobrenomeC,telefoneC);
             dao.inserirCliente(cliente);
             JOptionPane.showMessageDialog(null, "Adicionado com sucesso");
@@ -229,7 +251,7 @@ public class ManterCliente extends javax.swing.JFrame {
             try{
                 cliente.setNome(nome.getText());
                 cliente.setSobrenome(sobrenome.getText());
-                cliente.setTelefone(Integer.parseInt(telefone.getText()));
+                cliente.setTelefone(telefone.getText());
                 dao.atualizarCliente(cliente);
             }catch (Exception ex) {
                 JOptionPane.showMessageDialog(null,"Erro ao atualizar no banco de dados. E="+ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
@@ -243,7 +265,7 @@ public class ManterCliente extends javax.swing.JFrame {
         Cliente cliente = ModeloTabelaCliente.getCliente(linhaClicada);
         nome.setText(cliente.getNome());
         sobrenome.setText(cliente.getSobrenome());
-        telefone.setText(Integer.toString(cliente.getTelefone()));
+        telefone.setText(cliente.getTelefone());
     }//GEN-LAST:event_tabelaClienteMouseClicked
 
     private void excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirActionPerformed
@@ -269,13 +291,21 @@ public class ManterCliente extends javax.swing.JFrame {
 
     private void pesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesquisarActionPerformed
         ClienteDAO dao = new ClienteDAO();
-        String result = dao.pesquisa(sobrenome.getText());
-        if(result != null){
-            nome.setText(result);
+        List<Cliente> lista = new ArrayList();
+        if(jComboBox1.getSelectedIndex()==0)
+            lista = dao.pesquisa(pesq.getText());
+        else
+            lista = dao.pesquisaTel(pesq.getText());
+        if(!lista.isEmpty()){
+            ModeloTabelaCliente.setLista(lista);
         }else{
             JOptionPane.showMessageDialog(null,"Não encontrado.");
         }
     }//GEN-LAST:event_pesquisarActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -317,10 +347,12 @@ public class ManterCliente extends javax.swing.JFrame {
     private javax.swing.JButton atualizar;
     private javax.swing.JButton cadastrarCliente;
     private javax.swing.JButton excluir;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JButton limpa;

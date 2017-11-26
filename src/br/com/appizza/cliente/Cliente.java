@@ -17,12 +17,12 @@ public class Cliente {
     private int idCliente;
     private String nome;
     private String sobrenome;
-    private int telefone;
+    private String telefone;
 
     public Cliente() {
     }
 
-    public Cliente(String nomeC, String sobrenomeC, int telefoneC) {
+    public Cliente(String nomeC, String sobrenomeC, String telefoneC) {
         this.nome = nomeC;
         this.sobrenome = sobrenomeC;
         this.telefone = telefoneC;
@@ -52,11 +52,11 @@ public class Cliente {
         this.sobrenome = sobrenome;
     }
 
-    public int getTelefone() {
+    public String getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(int telefone) {
+    public void setTelefone(String telefone) {
         this.telefone = telefone;
     }    
 }
