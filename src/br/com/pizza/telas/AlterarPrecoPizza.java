@@ -5,6 +5,10 @@
  */
 package br.com.pizza.telas;
 
+import br.com.appizza.formas.Tipo;
+import br.com.pizza.dao.TipoDAO;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Leticia
@@ -140,6 +144,15 @@ public class AlterarPrecoPizza extends javax.swing.JFrame {
 
     private void salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarActionPerformed
         // TODO add your handling code here:
+        Tipo tipo = null;
+        TipoDAO dao = new TipoDAO();  
+        try{
+            tipo.setValorCmQuadrado(Float.parseFloat(precoCm.getText()));
+            //tipo.setTipo(JComboBox.getSelectedIndex());
+            dao.atualizarValorPizzaCm(TOP_ALIGNMENT);
+        }catch (Exception ex) {
+            JOptionPane.showMessageDialog(null,"Erro ao atualizar no banco de dados. E="+ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }     
     }//GEN-LAST:event_salvarActionPerformed
 
     /**
