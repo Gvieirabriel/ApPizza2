@@ -26,7 +26,6 @@ public class ApPizza {
         TelaInicial t = new TelaInicial();
         t.setVisible(true);
         t.setTitle("ApPizza");
-      
         try {
             if(!verificaTipos())
               cadastraTipos();
