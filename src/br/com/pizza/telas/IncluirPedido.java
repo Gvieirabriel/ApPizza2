@@ -77,6 +77,7 @@ public class IncluirPedido extends javax.swing.JFrame {
 
         jLabel4.setText("Sabor:");
 
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sabor" }));
         jComboBox2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox2ActionPerformed(evt);
