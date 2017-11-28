@@ -7,6 +7,9 @@ package br.com.pizza.telas;
 
 import br.com.appizza.formas.Tipo;
 import br.com.pizza.dao.TipoDAO;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -79,6 +82,11 @@ public class AlterarPrecoPizza extends javax.swing.JFrame {
         });
 
         cancelar.setText("Cancelar");
+        cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -132,6 +140,19 @@ public class AlterarPrecoPizza extends javax.swing.JFrame {
 
     private void tipoPizzaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tipoPizzaItemStateChanged
         // TODO add your handling code here:
+        //String tipoP = (String) tipoPizza.getSelectedItem();
+        //if(tipoP.equals("Simples")){
+        //    this.preco.setVisible(true);
+        //    this.precoCm.setVisible(true);
+        //}else
+        //if(tipoP.equals("Especial")){
+        //    this.preco.setVisible(true);
+        //    this.precoCm.setVisible(true);
+        //}else
+        //if(tipoP.equals("Premium")){
+        //    this.tipo.setVisible(true);
+        //    this.precoCm.setVisible(true);
+        //}
     }//GEN-LAST:event_tipoPizzaItemStateChanged
 
     private void tipoPizzaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tipoPizzaActionPerformed
@@ -144,16 +165,33 @@ public class AlterarPrecoPizza extends javax.swing.JFrame {
 
     private void salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarActionPerformed
         // TODO add your handling code here:
-        Tipo tipo = null;
+        //Tipo tipo = null;
+        //TipoDAO dao = new TipoDAO(); 
+        //try{
+        //    tipo.setValorCmQuadrado(Float.parseFloat(precoCm.getText()));
+        //    tipo.setTipo(JComboBox.getSelectedIndex());
+        //    dao.atualizarValorPizzaCm(tipo);
+        //}catch (Exception ex) {
+        //    JOptionPane.showMessageDialog(null,"Erro ao atualizar no banco de dados. E="+ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        //} 
+       
+        String tipoP = (String) tipoPizza.getSelectedItem();
+        float valorP = Float.parseFloat(precoCm.getText());
         TipoDAO dao = new TipoDAO();  
-        try{
-            tipo.setValorCmQuadrado(Float.parseFloat(precoCm.getText()));
-            //tipo.setTipo(JComboBox.getSelectedIndex());
-            dao.atualizarValorPizzaCm(TOP_ALIGNMENT);
-        }catch (Exception ex) {
-            JOptionPane.showMessageDialog(null,"Erro ao atualizar no banco de dados. E="+ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-        }     
+        try {
+            dao.atualizarValorPizzaCm(valorP);
+            JOptionPane.showMessageDialog(null, "Atualizado com sucesso");
+        } catch (SQLException ex) {
+            Logger.getLogger(AlterarPrecoPizza.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Erro");
+        }
     }//GEN-LAST:event_salvarActionPerformed
+
+    private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
+        // TODO add your handling code here:
+        new ManterPedido().setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_cancelarActionPerformed
 
     /**
      * @param args the command line arguments
