@@ -5,10 +5,14 @@
  */
 package br.com.pizza.telas;
 
-import br.com.appizza.pedido.Pedido;
-import br.com.pizza.dao.PedidoDAO;
-import br.com.pizza.modelo.tabela.ModeloTabelaPedido;
-import javax.swing.JOptionPane;
+import br.com.appizza.sabor.Sabor;
+import br.com.pizza.dao.SaborDAO;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JComboBox;
+
 
 /**
  *
@@ -18,6 +22,19 @@ public class IncluirPedido extends javax.swing.JFrame {
 
 
     public IncluirPedido() {
+        jComboBox2 = new JComboBox();
+        SaborDAO sabor = new SaborDAO();
+        List<Sabor> lista = new ArrayList();
+        try {
+            lista = sabor.listarSabor();
+        } catch (Exception ex) {
+            Logger.getLogger(IncluirPedido.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(!lista.isEmpty()){
+            for (int i = 0; i < lista.size(); i++) {
+                jComboBox2.addItem(lista.get(i).getNome());
+            }
+        }
         initComponents();
     }
 
@@ -43,7 +60,7 @@ public class IncluirPedido extends javax.swing.JFrame {
 
         jLabel2.setText("Forma:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Triangular", "Quadrada", "Redonda" }));
 
         jLabel3.setText("Dimensões:");
 
@@ -55,7 +72,12 @@ public class IncluirPedido extends javax.swing.JFrame {
 
         jLabel4.setText("Sabor:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sabor" }));
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
 
         salvar.setText("Salvar");
         salvar.addActionListener(new java.awt.event.ActionListener() {
@@ -133,10 +155,16 @@ public class IncluirPedido extends javax.swing.JFrame {
         setVisible(false);
     }//GEN-LAST:event_cancelarActionPerformed
 
+
     private void salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarActionPerformed
         // TODO add your handling code here:
         
     }//GEN-LAST:event_salvarActionPerformed
+
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox2ActionPerformed
+
 
     /**
      * @param args the command line arguments

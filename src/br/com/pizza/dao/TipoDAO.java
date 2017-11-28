@@ -21,7 +21,7 @@ public class TipoDAO {
     private final String atualizar = "UPDATE tipo SET tipo = ?, valorCmQuadrado = ? WHERE idTipo = ?";
     private final String excluir = "DELETE FROM tipo WHERE idTipo = ?";
     private final String pesquisaTipo = "SELECT tipo.tipo FROM tipo";
-    private final String atualizarValorPizzaCm = "UPDATE tipo set tipoValorCmQuadrado = ? where tipo = ?";
+    private final String atualizarValorPizzaCm = "UPDATE tipo SET ValorCmQuadrado = ? WHERE tipo LIKE ?";
     
     public void inserirTipo(Tipo tipo) throws SQLException{
         Connection con = null;
@@ -98,13 +98,14 @@ public class TipoDAO {
         }
     }
     
-    public void atualizarValorPizzaCm(float valorCmQuadrado) throws SQLException{
+    public void atualizarValorPizzaCm(float valorCmQuadrado,String tipo) throws SQLException{
         Connection con = null;
         PreparedStatement stmt = null;
         try{
             con = ConnectionFactory.getConnection();
             stmt = con.prepareStatement(atualizarValorPizzaCm);
             stmt.setFloat(1,valorCmQuadrado);
+            stmt.setString(2,tipo);
             stmt.executeUpdate();
         }catch (SQLException e) {
             throw new RuntimeException(e);

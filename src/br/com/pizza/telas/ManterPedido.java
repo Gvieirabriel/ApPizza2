@@ -5,6 +5,13 @@
  */
 package br.com.pizza.telas;
 
+import br.com.appizza.cliente.Cliente;
+import br.com.pizza.dao.ClienteDAO;
+import br.com.pizza.modelo.tabela.ModeloTabelaCliente;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Leticia
@@ -15,9 +22,12 @@ public class ManterPedido extends javax.swing.JFrame {
      * Creates new form ManterPedido
      */
     public ManterPedido() {
+        ModeloTabelaCliente = new ModeloTabelaCliente();
         initComponents();
     }
-
+    
+    private ModeloTabelaCliente ModeloTabelaCliente;
+    private int linhaClicada=-1;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,6 +41,8 @@ public class ManterPedido extends javax.swing.JFrame {
         telefone = new javax.swing.JTextField();
         pesqCli = new javax.swing.JButton();
         cancelar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TabelaCliente = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -56,6 +68,14 @@ public class ManterPedido extends javax.swing.JFrame {
             }
         });
 
+        TabelaCliente.setModel(ModeloTabelaCliente);
+        TabelaCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TabelaClientetabelaClienteMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(TabelaCliente);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -70,6 +90,11 @@ public class ManterPedido extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 197, Short.MAX_VALUE)
                 .addComponent(cancelar)
                 .addGap(29, 29, 29))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(24, 24, 24)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 531, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(79, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -81,6 +106,11 @@ public class ManterPedido extends javax.swing.JFrame {
                     .addComponent(pesqCli)
                     .addComponent(cancelar))
                 .addGap(54, 54, 54))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(22, 22, 22)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(110, Short.MAX_VALUE)))
         );
 
         pack();
@@ -93,7 +123,14 @@ public class ManterPedido extends javax.swing.JFrame {
 
     private void pesqCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesqCliActionPerformed
         // TODO add your handling code here:
-        
+        ClienteDAO dao = new ClienteDAO();
+        List<Cliente> lista = new ArrayList();
+        lista = dao.pesquisaTel(telefone.getText());
+        if(!lista.isEmpty()){
+            ModeloTabelaCliente.setLista(lista);
+        }else{
+            JOptionPane.showMessageDialog(null,"Não encontrado.");
+        }
     }//GEN-LAST:event_pesqCliActionPerformed
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
@@ -101,6 +138,13 @@ public class ManterPedido extends javax.swing.JFrame {
         new TelaInicial().setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_cancelarActionPerformed
+
+    private void TabelaClientetabelaClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaClientetabelaClienteMouseClicked
+        linhaClicada = TabelaCliente.rowAtPoint(evt.getPoint());
+        Cliente cliente = ModeloTabelaCliente.getCliente(linhaClicada);
+        IncluirPedido i = new IncluirPedido();
+        i.setVisible(true);
+    }//GEN-LAST:event_TabelaClientetabelaClienteMouseClicked
 
     /**
      * @param args the command line arguments
@@ -138,7 +182,9 @@ public class ManterPedido extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TabelaCliente;
     private javax.swing.JButton cancelar;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton pesqCli;
     private javax.swing.JLabel pesquisar;
     private javax.swing.JTextField telefone;
