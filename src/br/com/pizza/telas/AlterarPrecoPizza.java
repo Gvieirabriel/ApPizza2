@@ -179,7 +179,7 @@ public class AlterarPrecoPizza extends javax.swing.JFrame {
         float valorP = Float.parseFloat(precoCm.getText());
         TipoDAO dao = new TipoDAO();  
         try {
-            dao.atualizarValorPizzaCm(valorP);
+            dao.atualizarValorPizzaCm(valorP,tipoP);
             JOptionPane.showMessageDialog(null, "Atualizado com sucesso");
         } catch (SQLException ex) {
             Logger.getLogger(AlterarPrecoPizza.class.getName()).log(Level.SEVERE, null, ex);
@@ -189,7 +189,7 @@ public class AlterarPrecoPizza extends javax.swing.JFrame {
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
         // TODO add your handling code here:
-        new ManterPedido().setVisible(true);
+        //new ManterPedido().setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_cancelarActionPerformed
 
