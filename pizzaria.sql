@@ -38,7 +38,9 @@ create table Forma(
 create table Pedido(
 	idPedido int not null auto_increment,
     valorTotal float,
+    codCliente int not null,
     estado varchar(20),
+	foreign key (codCliente) references Cliente(idCLiente),
 	primary key(idPedido)
 );
 
@@ -46,10 +48,8 @@ create table ItemPedido(
 	idItemPedido int not null auto_increment,
     valorUnitario double,
     codPedido int not null,
-    codCliente int not null,
     codForma int not null,
 	primary key(idItemPedido),
     foreign key (codPedido) references Pedido(idPedido),
-    foreign key (codCliente) references Cliente(idCLiente),
     foreign key (codForma) references Forma(idForma)
 );
