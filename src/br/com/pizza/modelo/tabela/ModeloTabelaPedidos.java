@@ -20,7 +20,12 @@ public class ModeloTabelaPedidos extends AbstractTableModel{
     
     public ModeloTabelaPedidos() {
         
+        }
+    
+    public ModeloTabelaPedidos(List<Pedido> lista) {
+        this.lista = lista;
     }
+    
     
     public void AdicionaPedido(Pedido cliente){
         this.lista.add(cliente);

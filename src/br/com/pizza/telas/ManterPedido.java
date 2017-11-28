@@ -47,7 +47,7 @@ public class ManterPedido extends javax.swing.JFrame {
         pesqCli = new javax.swing.JButton();
         cancelar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabelaPedidos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -73,8 +73,8 @@ public class ManterPedido extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(ModeloTabelaPedidos);
-        jScrollPane1.setViewportView(jTable1);
+        tabelaPedidos.setModel(ModeloTabelaPedidos);
+        jScrollPane1.setViewportView(tabelaPedidos);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -126,7 +126,12 @@ public class ManterPedido extends javax.swing.JFrame {
         lista = daoc.pesquisaTel(telefone.getText());
         if(!lista.isEmpty()){
             try {
+                System.out.println(lista.get(0).getIdCliente());
                 listaP = dao.listarPedidoCliente(lista.get(0).getIdCliente());
+                if(listaP.isEmpty()){
+                    IncluirPedido p = new IncluirPedido();
+                    p.setVisible(true);
+                }
             } catch (Exception ex) {
                 Logger.getLogger(ManterPedido.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -180,9 +185,9 @@ public class ManterPedido extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelar;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton pesqCli;
     private javax.swing.JLabel pesquisar;
+    private javax.swing.JTable tabelaPedidos;
     private javax.swing.JTextField telefone;
     // End of variables declaration//GEN-END:variables
 }
