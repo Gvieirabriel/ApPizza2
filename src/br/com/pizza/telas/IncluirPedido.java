@@ -29,7 +29,7 @@ public class IncluirPedido extends javax.swing.JFrame {
     int codCliente;
 
     public IncluirPedido() {
-        jComboBox2 = new JComboBox();
+        initComponents();
         SaborDAO sabor = new SaborDAO();
         List<Sabor> lista = new ArrayList();
         try {
@@ -42,7 +42,6 @@ public class IncluirPedido extends javax.swing.JFrame {
                 jComboBox2.addItem(lista.get(i).getNome());
             }
         }
-        initComponents();
     }
 
 
@@ -68,6 +67,11 @@ public class IncluirPedido extends javax.swing.JFrame {
         jLabel2.setText("Forma:");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Triangular", "Quadrada", "Redonda" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Dimensões:");
 
@@ -79,7 +83,6 @@ public class IncluirPedido extends javax.swing.JFrame {
 
         jLabel4.setText("Sabor:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sabor" }));
         jComboBox2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox2ActionPerformed(evt);
@@ -185,6 +188,7 @@ public class IncluirPedido extends javax.swing.JFrame {
         sabor = sabordao.pesquisa(jComboBox2.getSelectedItem().toString());
         sabores.add(sabor);
         f.setSabores(sabores);
+        f.calculaValor();
         
         PedidoDAO pedidodao = new PedidoDAO();
         Pedido pedido = new Pedido();
@@ -193,6 +197,8 @@ public class IncluirPedido extends javax.swing.JFrame {
         pedido.setPedidos(pizzas);
         pedido.setValorTotal(pedido.calculaPrecoTotal());
         pedidodao.inserirPedido(pedido,codCliente);
+        
+        this.setVisible(false);
     }//GEN-LAST:event_salvarActionPerformed
 
     public void recebeCliente(int cod){
@@ -201,6 +207,10 @@ public class IncluirPedido extends javax.swing.JFrame {
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
 
     /**

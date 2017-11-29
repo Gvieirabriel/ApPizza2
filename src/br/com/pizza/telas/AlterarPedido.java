@@ -5,6 +5,19 @@
  */
 package br.com.pizza.telas;
 
+import br.com.appizza.formas.Forma;
+import br.com.appizza.formas.pQuadrada;
+import br.com.appizza.formas.pRedonda;
+import br.com.appizza.formas.pTriangular;
+import br.com.appizza.pedido.Pedido;
+import br.com.appizza.sabor.Sabor;
+import br.com.pizza.dao.PedidoDAO;
+import br.com.pizza.dao.SaborDAO;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Leticia
@@ -14,8 +27,22 @@ public class AlterarPedido extends javax.swing.JFrame {
     /**
      * Creates new form AlterarPedido
      */
+    int codPedido;
+    
     public AlterarPedido() {
         initComponents();
+        SaborDAO sabor = new SaborDAO();
+        List<Sabor> lista = new ArrayList();
+        try {
+            lista = sabor.listarSabor();
+        } catch (Exception ex) {
+            Logger.getLogger(IncluirPedido.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(!lista.isEmpty()){
+            for (int i = 0; i < lista.size(); i++) {
+                jComboBox2.addItem(lista.get(i).getNome());
+            }
+        }
     }
 
     /**
@@ -44,15 +71,18 @@ public class AlterarPedido extends javax.swing.JFrame {
 
         jLabel2.setText("Forrma:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Triangular", "Quadrada", "Redonda" }));
 
         jLabel3.setText("Dimensões:");
 
         jLabel4.setText("Sabor:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jButton1.setText("Salvar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         cancelar.setText("Cancelar");
         cancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -121,6 +151,45 @@ public class AlterarPedido extends javax.swing.JFrame {
         setVisible(false);
     }//GEN-LAST:event_cancelarActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String forma = jComboBox1.getSelectedItem().toString();
+        Forma f;
+        switch (forma) {
+            case "Quadrada":
+                f = new pQuadrada();
+                break;
+            case "Redonda":
+                f = new pRedonda();
+                break;
+            default:
+                f = new pTriangular();
+                break;
+        }
+        f.setDimensao(Double.parseDouble(jTextField1.getText()));
+        List<Sabor> sabores = new ArrayList<Sabor>();
+        Sabor sabor = new Sabor();
+        SaborDAO sabordao = new SaborDAO();
+        sabor = sabordao.pesquisa(jComboBox2.getSelectedItem().toString());
+        sabores.add(sabor);
+        f.setSabores(sabores);
+        f.calculaValor();
+        
+        PedidoDAO pedidodao = new PedidoDAO();
+        Pedido pedido = new Pedido();
+        List<Forma> pizzas = new ArrayList<Forma>();
+        pizzas.add(f);
+        pedido.setNumeroPedido(codPedido);
+        pedido.setPedidos(pizzas);
+        pedido.setValorTotal(pedido.calculaPrecoTotal());
+        pedidodao.atualizar(pedido);
+        
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton1ActionPerformed
+    
+    public void recebePedido(int cod){
+        codPedido = cod;
+    }
     /**
      * @param args the command line arguments
      */
