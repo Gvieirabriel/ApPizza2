@@ -29,9 +29,11 @@ import javax.swing.JComboBox;
 public class IncluirPedido extends javax.swing.JFrame {
 
     int codCliente;
+    int codPedido;
 
     public IncluirPedido() {
         initComponents();
+        codPedido = 0;
         SaborDAO sabor = new SaborDAO();
         List<Sabor> lista = new ArrayList();
         try {
@@ -221,19 +223,23 @@ public class IncluirPedido extends javax.swing.JFrame {
         
         pedido.setPedidos(pizzas);
         pedido.setValorTotal(pedido.calculaPrecoTotal());
-        pedidodao.inserirPedido(pedido,codCliente);
+        
+        if(codPedido==0)
+            pedidodao.inserirPedido(pedido,codCliente);
+            
         int idPedido = 0;
         try {
             idPedido = pedidodao.getUltPedido();
         } catch (SQLException ex) {
             Logger.getLogger(IncluirPedido.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        System.out.println(idPedido);
 
         FormaDAO formaD = new FormaDAO();
         f.setForma(forma);
-        f.setCodPedido(idPedido);
+        if(codPedido==0)
+            f.setCodPedido(idPedido);
+        else
+            f.setCodPedido(codPedido);
         
         if(jComboBox3.getSelectedItem().toString().equals("Sem segundo sabor")){
             formaD.inserirFormaUmSabor(f);
@@ -245,7 +251,12 @@ public class IncluirPedido extends javax.swing.JFrame {
     }//GEN-LAST:event_salvarActionPerformed
 
     public void recebeCliente(int cod){
-        codCliente = cod;
+        this.codCliente = cod;
+    }
+    
+    public void recebeCliente(int cod, int codP){
+        this.codCliente = cod;
+        this.codPedido = codP;
     }
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         // TODO add your handling code here:

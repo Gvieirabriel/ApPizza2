@@ -142,7 +142,6 @@ public class ManterPedido extends javax.swing.JFrame {
         lista = daoc.pesquisaTel(telefone.getText());
         if(!lista.isEmpty()){
             try {
-                System.out.println(lista.get(0).getIdCliente());
                 listaP = dao.listarPedidoCliente(lista.get(0).getIdCliente());
                 if(listaP.isEmpty()){
                     IncluirPedido p = new IncluirPedido();

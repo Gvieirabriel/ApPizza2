@@ -37,7 +37,7 @@ public class ManterItemPedido extends javax.swing.JFrame {
         initComponents();
         FormaDAO fdao = new FormaDAO();
         PedidoDAO dao = new PedidoDAO();
-        
+        System.out.println(codPedido);
         List<Forma> listaf = new ArrayList();
         try {
             listaf = fdao.listarForma(codPedido);
@@ -156,6 +156,10 @@ public class ManterItemPedido extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+         IncluirPedido p = new IncluirPedido();
+         p.recebeCliente(codCliente,codPedido);
+         p.setVisible(true);
+         this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
