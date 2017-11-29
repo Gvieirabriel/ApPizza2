@@ -185,6 +185,7 @@ public class IncluirPedido extends javax.swing.JFrame {
         sabor = sabordao.pesquisa(jComboBox2.getSelectedItem().toString());
         sabores.add(sabor);
         f.setSabores(sabores);
+        f.calculaValor();
         
         PedidoDAO pedidodao = new PedidoDAO();
         Pedido pedido = new Pedido();

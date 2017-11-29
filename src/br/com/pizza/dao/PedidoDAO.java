@@ -79,7 +79,8 @@ public class PedidoDAO {
         List<Pedido> lista = new ArrayList();
         try{
             con = ConnectionFactory.getConnection();
-            stmt1 = con.prepareStatement(listar);
+            stmt1 = con.prepareStatement(listarPorCliente);
+            stmt1.setInt(1,codCliente);
             rs = stmt1.executeQuery();
             while(rs.next()){
                 Pedido pedido = new Pedido();
