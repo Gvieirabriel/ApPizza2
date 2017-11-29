@@ -25,7 +25,7 @@ public class FormaDAO {
     private final String atualizar = "UPDATE Forma SET valorUnitario= ?, nomeForma= ?,codSabor=?,dimensaoLado=? WHERE idForma = ?";
     private final String atualizar2 = "UPDATE Forma SET valorUnitario= ?, nomeForma= ?,codSabor=?,codSabor2=?,dimensaoLado=? WHERE idForma = ?";
     private final String excluir = "DELETE * FROM Forma WHERE idForma = ?";
-    private final String listar = "SELECT * FROM Forma f WHERE codPedido = ?";
+    private final String listar = "SELECT codPedido,idForma,valorUnitario,nomeForma,codSabor,codSabor2,dimensaoLado FROM Forma f WHERE codPedido = ?";
     
     public void inserirFormaUmSabor(Forma f){
         Connection con = null;
@@ -85,18 +85,20 @@ public class FormaDAO {
             stmt1 = con.prepareStatement(listar);
             stmt1.setInt(1,codF);
             rs = stmt1.executeQuery();
-            List<Sabor> s = new ArrayList();
             while(rs.next()){
                 Forma f = new Forma();
+                List<Sabor> s = new ArrayList();
+                Sabor sab = new Sabor();
+                Sabor sab2 = new Sabor();
                 f.setCodForma(rs.getInt("idForma"));
                 f.setDimensao(rs.getDouble("dimensaoLado"));
                 f.setValor(rs.getDouble("valorUnitario"));
-                f.setCodPedido(rs.getInt("codPedido"));
-                Sabor sab = new Sabor();
+                f.setForma(rs.getString("nomeForma"));
+                f.setCodPedido(rs.getInt("codPedido"));  
                 sab.setIdSabor(rs.getInt("codSabor"));
                 s.add(sab);
-                sab.setIdSabor(rs.getInt("codSabor2"));
-                s.add(sab);
+                sab2.setIdSabor(rs.getInt("codSabor2"));
+                s.add(sab2);
                 f.setSabores(s);
                 lista.add(f);
             }

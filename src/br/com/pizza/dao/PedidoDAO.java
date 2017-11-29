@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class PedidoDAO {
     private final String incluir = "INSERT INTO Pedido(codCliente,valorTotal,estado) VALUES (?,?,?)";
-    private final String atualizar = "UPDATE Pedido SET valorTotal= ?, estado= ?, WHERE idPedido = ?";
+    private final String atualizar = "UPDATE Pedido SET valorTotal= ?, estado= ? WHERE idPedido = ?";
     private final String excluir = "DELETE FROM Pedido WHERE idPedido = ?";
     private final String listar = "SELECT pedido.idPedido, pedido.valorTotal, pedido.estado FROM Pedido";
     private final String listarPorCliente = "SELECT pedido.idPedido, pedido.valorTotal, pedido.estado FROM Pedido WHERE codCliente = (?)";
@@ -114,7 +114,7 @@ public class PedidoDAO {
             con = ConnectionFactory.getConnection();
             stmt = con.prepareStatement(atualizar);
             stmt.setDouble(1,pedido.getValorTotal());
-            stmt.setString(2,pedido.getStatus());
+            stmt.setString(2,"Aberto");
             stmt.setInt(3,pedido.getNumeroPedido());
 
             stmt.executeUpdate();

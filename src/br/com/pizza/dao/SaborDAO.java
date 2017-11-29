@@ -24,6 +24,7 @@ public class SaborDAO {
     private final String excluir = "DELETE FROM sabor WHERE idSabor = ?";
     private final String listar = "SELECT sabor.idSabor, sabor.nome, sabor.codTipo FROM sabor";
     private final String pesquisaNome = "SELECT sabor.idSabor, sabor.nome, sabor.codTipo FROM sabor WHERE sabor.nome LIKE (?)";
+    private final String pesquisaCod = "SELECT sabor.idSabor, sabor.nome, sabor.codTipo FROM sabor WHERE sabor.idSabor = ?";
     
     public void inserirSabor(Sabor sabor) throws SQLException{
         Connection con = null;
@@ -129,4 +130,31 @@ public class SaborDAO {
             try{con.close();}catch(Exception ex){System.out.println("Erro ao fechar conexÃ£o. Ex="+ex.getMessage());}
         }
     }
+    public Sabor pesquisaId(int cod){
+        Connection con = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try{
+            con = ConnectionFactory.getConnection();
+            stmt = con.prepareStatement(pesquisaCod);
+            stmt.setInt(1,cod);
+            rs = stmt.executeQuery();
+            Sabor s = null;
+            while(rs.next()){
+                s = new Sabor();
+                s.setIdSabor(rs.getInt("idSabor"));
+                s.setCodTipo(rs.getInt("codTipo"));
+                s.setNome(rs.getString("nome"));
+            }
+            return s;          
+        }catch (SQLException ex) {
+            throw new RuntimeException("Erro listar. Origem="+ex.getMessage());
+        }finally{
+            try{rs.close();}catch(Exception ex){System.out.println("Erro ao fechar result set. Ex="+ex.getMessage());}
+            try{stmt.close();}catch(Exception ex){System.out.println("Erro ao fechar stmt. Ex="+ex.getMessage());}
+            try{con.close();}catch(Exception ex){System.out.println("Erro ao fechar conexÃ£o. Ex="+ex.getMessage());}
+        }
+    }
+    
+    
 }

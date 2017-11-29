@@ -6,6 +6,8 @@
 package br.com.pizza.modelo.tabela;
 
 import br.com.appizza.formas.Forma;
+import br.com.appizza.sabor.Sabor;
+import br.com.pizza.dao.SaborDAO;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
@@ -21,7 +23,7 @@ public class ModeloTabelaItemPedido extends AbstractTableModel{
     
     public ModeloTabelaItemPedido() {
         
-        }
+    }
     
     public ModeloTabelaItemPedido(List<Forma> lista) {
         this.lista = lista;
@@ -70,15 +72,27 @@ public class ModeloTabelaItemPedido extends AbstractTableModel{
     public int getColumnCount() {
         return this.colunas.length;
     }
+    
+    @Override
+    public String getColumnName(int index) {
+        return this.colunas[index];
+    }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Forma f = lista.get(rowIndex);
         String s;
-        if(f.getSabores().size()==1)
-            s = f.getSabores().get(0).getNome();
-        else
-            s = f.getSabores().get(0).getNome() + f.getSabores().get(1).getNome();
+        SaborDAO sab = new SaborDAO();
+        Sabor sabor = new Sabor();
+        Sabor sabor2 = new Sabor();
+        if(f.getSabores().size()==1){
+            sabor = sab.pesquisaId(f.getSabores().get(0).getIdSabor());
+            s = sabor.getNome();
+        }else{
+            sabor = sab.pesquisaId(f.getSabores().get(0).getIdSabor());
+            sabor2 = sab.pesquisaId(f.getSabores().get(1).getIdSabor());
+            s = sabor.getNome()+" e "+sabor2.getNome();
+        }
         switch (columnIndex){
             case 0: return s;
             case 1: return f.getForma();

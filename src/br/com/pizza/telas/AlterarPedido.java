@@ -201,11 +201,12 @@ public class AlterarPedido extends javax.swing.JFrame {
         SaborDAO sabordao = new SaborDAO();
         sabor = sabordao.pesquisa(jComboBox2.getSelectedItem().toString());
         sabores.add(sabor);
-        sabor = new Sabor();
-        if(!jComboBox3.getSelectedItem().toString().equals("Sem segundo sabor")){
-            sabor = sabordao.pesquisa(jComboBox3.getSelectedItem().toString());
+        Sabor sabor2 = new Sabor();
+        if(jComboBox3.getSelectedIndex()!=0){
+            sabor2 = sabordao.pesquisa(jComboBox3.getSelectedItem().toString());
+            sabores.add(sabor2);
+            System.err.println("Entrou");
         }
-        sabores.add(sabor);
         f.setSabores(sabores);
         f.calculaValor();
         
@@ -223,11 +224,14 @@ public class AlterarPedido extends javax.swing.JFrame {
         f.setCodPedido(codPedido);
         
         if(jComboBox3.getSelectedItem().toString().equals("Sem segundo sabor")){
-            formaD.inserirFormaUmSabor(f);
+            formaD.atualizar1(f);
         }else{
-            formaD.inserirFormaDoisUmSabor(f);
+            formaD.atualizar2(f);
         }
-        
+        ManterItemPedido mip = new ManterItemPedido();
+        mip.recebePedido(codPedido);
+        mip.listarPedidos();
+        mip.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -208,11 +208,12 @@ public class IncluirPedido extends javax.swing.JFrame {
         SaborDAO sabordao = new SaborDAO();
         sabor = sabordao.pesquisa(jComboBox2.getSelectedItem().toString());
         sabores.add(sabor);
-        sabor = new Sabor();
-        if(!jComboBox3.getSelectedItem().toString().equals("Sem segundo sabor")){
-            sabor = sabordao.pesquisa(jComboBox3.getSelectedItem().toString());
+        Sabor sabor2 = new Sabor();
+        if(jComboBox3.getSelectedIndex()!=0){
+            sabor2 = sabordao.pesquisa(jComboBox3.getSelectedItem().toString());
+            sabores.add(sabor2);
+            System.err.println("Entrou");
         }
-        sabores.add(sabor);
         f.setSabores(sabores);
         f.calculaValor();
 
@@ -246,7 +247,10 @@ public class IncluirPedido extends javax.swing.JFrame {
         }else{
             formaD.inserirFormaDoisUmSabor(f);
         }
-        
+        ManterItemPedido mip = new ManterItemPedido();
+        mip.recebePedido(codPedido,codCliente);
+        mip.listarPedidos();
+        mip.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_salvarActionPerformed
 

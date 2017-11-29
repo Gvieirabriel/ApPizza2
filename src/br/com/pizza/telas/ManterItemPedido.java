@@ -152,6 +152,10 @@ public class ManterItemPedido extends javax.swing.JFrame {
         this.codCliente = cod;
     }
     
+    public void recebePedido(int pedido){
+        this.codPedido = pedido;
+    }
+    
     private void tabelaItensPedidosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaItensPedidosMouseClicked
         // TODO add your handling code here:
         linhaClicada = tabelaItensPedidos.rowAtPoint(evt.getPoint());
