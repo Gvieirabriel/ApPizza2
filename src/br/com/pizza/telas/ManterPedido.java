@@ -48,6 +48,7 @@ public class ManterPedido extends javax.swing.JFrame {
         cancelar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaPedidos = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,7 +75,19 @@ public class ManterPedido extends javax.swing.JFrame {
         });
 
         tabelaPedidos.setModel(ModeloTabelaPedidos);
+        tabelaPedidos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaPedidosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabelaPedidos);
+
+        jButton1.setText("Atualizar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -87,13 +100,15 @@ public class ManterPedido extends javax.swing.JFrame {
                 .addComponent(telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pesqCli)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 197, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(46, 46, 46)
                 .addComponent(cancelar)
                 .addGap(29, 29, 29))
             .addGroup(layout.createSequentialGroup()
                 .addGap(56, 56, 56)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -105,7 +120,8 @@ public class ManterPedido extends javax.swing.JFrame {
                     .addComponent(pesquisar)
                     .addComponent(telefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(pesqCli)
-                    .addComponent(cancelar))
+                    .addComponent(cancelar)
+                    .addComponent(jButton1))
                 .addGap(54, 54, 54))
         );
 
@@ -132,6 +148,7 @@ public class ManterPedido extends javax.swing.JFrame {
                     IncluirPedido p = new IncluirPedido();
                     p.recebeCliente(lista.get(0).getIdCliente());
                     p.setVisible(true);
+                    this.setVisible(false);
                 }
             } catch (Exception ex) {
                 Logger.getLogger(ManterPedido.class.getName()).log(Level.SEVERE, null, ex);
@@ -147,6 +164,22 @@ public class ManterPedido extends javax.swing.JFrame {
         new TelaInicial().setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_cancelarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        if(linhaClicada != -1){
+            Pedido p = ModeloTabelaPedidos.getPedido(linhaClicada);
+            AlterarPedido a = new AlterarPedido();
+            a.recebePedido(p.getNumeroPedido());
+            a.setVisible(true);
+            this.setVisible(false);
+        } 
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tabelaPedidosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaPedidosMouseClicked
+        // TODO add your handling code here:
+        linhaClicada = tabelaPedidos.rowAtPoint(evt.getPoint());
+    }//GEN-LAST:event_tabelaPedidosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -185,6 +218,7 @@ public class ManterPedido extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelar;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton pesqCli;
     private javax.swing.JLabel pesquisar;
