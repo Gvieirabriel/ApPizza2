@@ -179,13 +179,20 @@ public class PedidoStatus extends javax.swing.JFrame {
         PedidoDAO dao = new PedidoDAO();
         String statusP = (String) status.getSelectedItem();
         Pedido p = new Pedido();
+        ClienteDAO daoc = new ClienteDAO();
+        Cliente c = new Cliente();
         p = ModeloTabelaPedidos.getPedido(linhaClicada);
         try {
             dao.atualizarStatus(statusP,p.getNumeroPedido());
         } catch (SQLException ex) {
             Logger.getLogger(PedidoStatus.class.getName()).log(Level.SEVERE, null, ex);
         }
-        ModeloTabelaPedidos.fireTableRowsUpdated(linhaClicada, linhaClicada);
+        c = daoc.pesquisaTel(telefone.getText()).get(0);
+        try {
+            ModeloTabelaPedidos.setLista(dao.listarPedidoCliente(c.getIdCliente()));
+        } catch (Exception ex) {
+            Logger.getLogger(PedidoStatus.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void tabelaPedidosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaPedidosMouseClicked
