@@ -14,6 +14,7 @@ import br.com.appizza.sabor.Sabor;
 import br.com.pizza.dao.FormaDAO;
 import br.com.pizza.dao.PedidoDAO;
 import br.com.pizza.dao.SaborDAO;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -220,8 +221,16 @@ public class IncluirPedido extends javax.swing.JFrame {
         
         pedido.setPedidos(pizzas);
         pedido.setValorTotal(pedido.calculaPrecoTotal());
-        int idPedido = pedidodao.inserirPedido(pedido,codCliente);
+        pedidodao.inserirPedido(pedido,codCliente);
+        int idPedido = 0;
+        try {
+            idPedido = pedidodao.getUltPedido();
+        } catch (SQLException ex) {
+            Logger.getLogger(IncluirPedido.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
+        System.out.println(idPedido);
+
         FormaDAO formaD = new FormaDAO();
         f.setForma(forma);
         f.setCodPedido(idPedido);

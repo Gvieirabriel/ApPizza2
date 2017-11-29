@@ -26,9 +26,10 @@ public class PedidoDAO {
     private final String listar = "SELECT pedido.idPedido, pedido.valorTotal, pedido.estado FROM Pedido";
     private final String listarPorCliente = "SELECT pedido.idPedido, pedido.valorTotal, pedido.estado FROM Pedido WHERE codCliente = (?)";
     private final String atualizarStatus = "UPDATE Pedido SET estado= ? WHERE idPedido = ?";
+    private final String ultimoPedido = "Select MAX(p.idPedido) AS maxid FROM Pedido p";
     
     
-    public int inserirPedido(Pedido pedido, int codCliente){
+    public void inserirPedido(Pedido pedido, int codCliente){
         Connection con = null;
         int numero = 0;
         PreparedStatement stmt1 = null;
@@ -40,14 +41,13 @@ public class PedidoDAO {
             stmt1.setInt(1,codCliente);
             stmt1.setDouble(2, pedido.getValorTotal());
             stmt1.setString(3,"Aberto");
-            numero = stmt1.executeUpdate();
+            stmt1.executeUpdate();
             con.commit();
         }catch (SQLException ex) {
             throw new RuntimeException("Erro ao inserir o Pedido no banco de dados. Origem="+ex.getMessage());
         } finally{
             try{stmt1.close();}catch(Exception ex){System.out.println("Erro ao fechar stmt1. Ex="+ex.getMessage());}
             try{con.close();}catch(Exception ex){System.out.println("Erro ao fechar conexão. Ex="+ex.getMessage());}
-            return numero;
         }
         
     }
@@ -156,6 +156,27 @@ public class PedidoDAO {
         } finally{
             try{stmt.close();}catch(Exception ex){System.out.println("Erro ao fechar stmt. Ex="+ex.getMessage());}
             try{con.close();}catch(Exception ex){System.out.println("Erro ao fechar conexÃ£o. Ex="+ex.getMessage());}
+        }
+    }
+
+    public int getUltPedido() throws SQLException{
+      Connection con = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        int maxId = 0;
+        try{
+            con = ConnectionFactory.getConnection();
+            stmt = con.prepareStatement(ultimoPedido);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                maxId = rs.getInt("maxid");
+            }
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally{
+            try{stmt.close();}catch(Exception ex){System.out.println("Erro ao fechar stmt. Ex="+ex.getMessage());}
+            try{con.close();}catch(Exception ex){System.out.println("Erro ao fechar conexÃ£o. Ex="+ex.getMessage());}
+            return maxId;
         }
     }
 }
