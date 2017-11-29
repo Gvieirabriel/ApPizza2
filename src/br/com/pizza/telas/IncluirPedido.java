@@ -5,7 +5,13 @@
  */
 package br.com.pizza.telas;
 
+import br.com.appizza.formas.Forma;
+import br.com.appizza.formas.pQuadrada;
+import br.com.appizza.formas.pRedonda;
+import br.com.appizza.formas.pTriangular;
+import br.com.appizza.pedido.Pedido;
 import br.com.appizza.sabor.Sabor;
+import br.com.pizza.dao.PedidoDAO;
 import br.com.pizza.dao.SaborDAO;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +26,7 @@ import javax.swing.JComboBox;
  */
 public class IncluirPedido extends javax.swing.JFrame {
 
+    int codCliente;
 
     public IncluirPedido() {
         jComboBox2 = new JComboBox();
@@ -158,9 +165,39 @@ public class IncluirPedido extends javax.swing.JFrame {
 
     private void salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarActionPerformed
         // TODO add your handling code here:
+        String forma = jComboBox1.getSelectedItem().toString();
+        Forma f;
+        switch (forma) {
+            case "Quadrada":
+                f = new pQuadrada();
+                break;
+            case "Redonda":
+                f = new pRedonda();
+                break;
+            default:
+                f = new pTriangular();
+                break;
+        }
+        f.setDimensao(Double.parseDouble(dimensoes.getText()));
+        List<Sabor> sabores = new ArrayList<Sabor>();
+        Sabor sabor = new Sabor();
+        SaborDAO sabordao = new SaborDAO();
+        sabor = sabordao.pesquisa(jComboBox2.getSelectedItem().toString());
+        sabores.add(sabor);
+        f.setSabores(sabores);
         
+        PedidoDAO pedidodao = new PedidoDAO();
+        Pedido pedido = new Pedido();
+        List<Forma> pizzas = new ArrayList<Forma>();
+        pizzas.add(f);
+        pedido.setPedidos(pizzas);
+        pedido.setValorTotal(pedido.calculaPrecoTotal());
+        pedidodao.inserirPedido(pedido,codCliente);
     }//GEN-LAST:event_salvarActionPerformed
 
+    public void recebeCliente(int cod){
+        codCliente = cod;
+    }
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox2ActionPerformed

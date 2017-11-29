@@ -23,6 +23,7 @@ public class SaborDAO {
     private final String atualizar = "UPDATE sabor SET nome = ?, codTipo = ? WHERE idSabor = ?";
     private final String excluir = "DELETE FROM sabor WHERE idSabor = ?";
     private final String listar = "SELECT sabor.idSabor, sabor.nome, sabor.codTipo FROM sabor";
+    private final String pesquisaNome = "SELECT sabor.idSabor, sabor.nome, sabor.codTipo FROM sabor WHERE sabor.nome LIKE (?)";
     
     public void inserirSabor(Sabor sabor) throws SQLException{
         Connection con = null;
@@ -98,6 +99,32 @@ public class SaborDAO {
         }catch (SQLException e) {
             throw new RuntimeException(e);
         } finally{
+            try{stmt.close();}catch(Exception ex){System.out.println("Erro ao fechar stmt. Ex="+ex.getMessage());}
+            try{con.close();}catch(Exception ex){System.out.println("Erro ao fechar conexÃ£o. Ex="+ex.getMessage());}
+        }
+    }
+    
+    public Sabor pesquisa(String nome){
+        Connection con = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try{
+            con = ConnectionFactory.getConnection();
+            stmt = con.prepareStatement(pesquisaNome);
+            stmt.setString(1,nome);
+            rs = stmt.executeQuery();
+            Sabor s = null;
+            while(rs.next()){
+                s = new Sabor();
+                s.setIdSabor(rs.getInt("idSabor"));
+                s.setCodTipo(rs.getInt("codTipo"));
+                s.setNome(rs.getString("nome"));
+            }
+            return s;          
+        }catch (SQLException ex) {
+            throw new RuntimeException("Erro listar. Origem="+ex.getMessage());
+        }finally{
+            try{rs.close();}catch(Exception ex){System.out.println("Erro ao fechar result set. Ex="+ex.getMessage());}
             try{stmt.close();}catch(Exception ex){System.out.println("Erro ao fechar stmt. Ex="+ex.getMessage());}
             try{con.close();}catch(Exception ex){System.out.println("Erro ao fechar conexÃ£o. Ex="+ex.getMessage());}
         }

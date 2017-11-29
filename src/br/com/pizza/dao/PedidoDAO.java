@@ -19,13 +19,13 @@ import java.util.List;
  * @author mths
  */
 public class PedidoDAO {
-    private final String incluir = "INSERT INTO Pedido(codCliente,valorTotal, estado) VALUES (?,?,?)";
+    private final String incluir = "INSERT INTO Pedido(codCliente,valorTotal) VALUES (?,?)";
     private final String atualizar = "UPDATE Pedido SET valorTotal= ?, estado= ?, WHERE idPedido = ?";
     private final String excluir = "DELETE FROM Pedido WHERE idPedido = ?";
     private final String listar = "SELECT pedido.idPedido, pedido.valorTotal, pedido.estado FROM Pedido";
     private final String listarPorCliente = "SELECT pedido.idPedido, pedido.valorTotal, pedido.estado FROM Pedido WHERE codCliente = (?)";
 
-    public void inserirPedido(Pedido pedido){
+    public void inserirPedido(Pedido pedido, int codCliente){
          Connection con = null;
         PreparedStatement stmt1 = null;
         try{
@@ -33,8 +33,8 @@ public class PedidoDAO {
             con.setAutoCommit(false);
 
             stmt1 = con.prepareStatement(incluir,PreparedStatement.RETURN_GENERATED_KEYS);
-            stmt1.setDouble(1,pedido.getValorTotal());
-            stmt1.setString(2, pedido.getStatus());
+            stmt1.setInt(1,codCliente);
+            stmt1.setDouble(2, pedido.getValorTotal());
             stmt1.executeUpdate();
             con.commit();
         }catch (SQLException ex) {

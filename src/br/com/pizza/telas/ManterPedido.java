@@ -130,6 +130,7 @@ public class ManterPedido extends javax.swing.JFrame {
                 listaP = dao.listarPedidoCliente(lista.get(0).getIdCliente());
                 if(listaP.isEmpty()){
                     IncluirPedido p = new IncluirPedido();
+                    p.recebeCliente(lista.get(0).getIdCliente());
                     p.setVisible(true);
                 }
             } catch (Exception ex) {
