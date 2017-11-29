@@ -29,7 +29,7 @@ public class IncluirPedido extends javax.swing.JFrame {
     int codCliente;
 
     public IncluirPedido() {
-        jComboBox2 = new JComboBox();
+        initComponents();
         SaborDAO sabor = new SaborDAO();
         List<Sabor> lista = new ArrayList();
         try {
@@ -42,7 +42,6 @@ public class IncluirPedido extends javax.swing.JFrame {
                 jComboBox2.addItem(lista.get(i).getNome());
             }
         }
-        initComponents();
     }
 
 
@@ -79,7 +78,6 @@ public class IncluirPedido extends javax.swing.JFrame {
 
         jLabel4.setText("Sabor:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sabor" }));
         jComboBox2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox2ActionPerformed(evt);
