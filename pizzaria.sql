@@ -40,10 +40,12 @@ create table Forma(
 	idForma int not null auto_increment,
 	nomeForma varchar(20),
     codSabor int not null,
+    codSabor2 int not null,
     dimensaoLado float,
     codPedido int not null,
 	valorUnitario double,
     foreign key (codPedido) references Pedido(idPedido),
     foreign key (codSabor) references Sabor(idSabor),
+    foreign key (codSabor2) references Sabor(idSabor),
     primary key(idForma)
 );
