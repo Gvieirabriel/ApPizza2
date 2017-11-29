@@ -88,6 +88,11 @@ public class ManterItemPedido extends javax.swing.JFrame {
         });
 
         jButton2.setText("Novo Item");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -148,6 +153,10 @@ public class ManterItemPedido extends javax.swing.JFrame {
         // TODO add your handling code here:
         linhaClicada = tabelaItensPedidos.rowAtPoint(evt.getPoint());
     }//GEN-LAST:event_tabelaItensPedidosMouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

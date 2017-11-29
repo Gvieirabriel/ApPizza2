@@ -67,7 +67,7 @@ public class IncluirPedido extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("Cadastrar Pedido");
+        jLabel1.setText("Cadastrar Item Pedido");
 
         jLabel2.setText("Forma:");
 
