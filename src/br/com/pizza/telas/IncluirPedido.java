@@ -192,6 +192,8 @@ public class IncluirPedido extends javax.swing.JFrame {
         pedido.setPedidos(pizzas);
         pedido.setValorTotal(pedido.calculaPrecoTotal());
         pedidodao.inserirPedido(pedido,codCliente);
+        
+        this.setVisible(false);
     }//GEN-LAST:event_salvarActionPerformed
 
     public void recebeCliente(int cod){
