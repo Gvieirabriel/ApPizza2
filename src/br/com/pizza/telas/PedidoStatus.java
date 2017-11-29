@@ -48,12 +48,14 @@ public class PedidoStatus extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaPedidos = new javax.swing.JTable();
         status = new javax.swing.JComboBox<>();
+        telefone = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         pesquisar.setText("Status");
 
-        pesqCli.setText("Alterar");
+        pesqCli.setText("Ok");
         pesqCli.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pesqCliActionPerformed(evt);
@@ -72,6 +74,8 @@ public class PedidoStatus extends javax.swing.JFrame {
 
         status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        jButton1.setText("Atualizar");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -80,29 +84,40 @@ public class PedidoStatus extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(pesquisar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pesqCli)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 272, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(cancelar)
                 .addGap(29, 29, 29))
             .addGroup(layout.createSequentialGroup()
-                .addGap(56, 56, 56)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(56, 56, 56)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(48, 48, 48)
+                        .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1)))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(37, Short.MAX_VALUE)
+                .addContainerGap(36, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(pesquisar)
-                    .addComponent(pesqCli)
                     .addComponent(cancelar)
-                    .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(54, 54, 54))
+                    .addComponent(telefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pesqCli))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addGap(14, 14, 14))
         );
 
         pack();
@@ -121,14 +136,23 @@ public class PedidoStatus extends javax.swing.JFrame {
         List<Cliente> lista = new ArrayList();
         List<Pedido> listaP = new ArrayList();
         String statusP = (String) status.getSelectedItem();
-        try {
-            dao.atualizarStatus(statusP);
-            JOptionPane.showMessageDialog(null, "Atualizado com sucesso");
-        } catch (Exception ex) {
-            Logger.getLogger(PedidoStatus.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "Erro");
-        }
+        lista = daoc.pesquisaTel(telefone.getText());
+        if(!lista.isEmpty()){
+            try {
+                System.out.println(lista.get(0).getIdCliente());
+                listaP = dao.listarPedidoCliente(lista.get(0).getIdCliente());
+                if(listaP.isEmpty()){
+                    dao.atualizarStatus(statusP);
+                    JOptionPane.showMessageDialog(null, "Atualizado com sucesso");
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(ManterPedido.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Erro");
+            }
             ModeloTabelaPedidos.setLista(listaP);
+        }else{
+            JOptionPane.showMessageDialog(null,"Não encontrado.");
+        }
     }//GEN-LAST:event_pesqCliActionPerformed
 
     /**
@@ -169,10 +193,12 @@ public class PedidoStatus extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelar;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton pesqCli;
     private javax.swing.JLabel pesquisar;
     private javax.swing.JComboBox<String> status;
     private javax.swing.JTable tabelaPedidos;
+    private javax.swing.JTextField telefone;
     // End of variables declaration//GEN-END:variables
 }
