@@ -11,8 +11,10 @@ import br.com.appizza.formas.pRedonda;
 import br.com.appizza.formas.pTriangular;
 import br.com.appizza.pedido.Pedido;
 import br.com.appizza.sabor.Sabor;
+import br.com.pizza.dao.FormaDAO;
 import br.com.pizza.dao.PedidoDAO;
 import br.com.pizza.dao.SaborDAO;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -207,7 +209,6 @@ public class AlterarPedido extends javax.swing.JFrame {
         f.setSabores(sabores);
         f.calculaValor();
         
-        
         PedidoDAO pedidodao = new PedidoDAO();
         Pedido pedido = new Pedido();
         List<Forma> pizzas = new ArrayList<Forma>();
@@ -216,6 +217,16 @@ public class AlterarPedido extends javax.swing.JFrame {
         pedido.setPedidos(pizzas);
         pedido.setValorTotal(pedido.calculaPrecoTotal());
         pedidodao.atualizar(pedido);
+   
+        FormaDAO formaD = new FormaDAO();
+        f.setForma(forma);
+        f.setCodPedido(codPedido);
+        
+        if(jComboBox3.getSelectedItem().toString().equals("Sem segundo sabor")){
+            formaD.inserirFormaUmSabor(f);
+        }else{
+            formaD.inserirFormaDoisUmSabor(f);
+        }
         
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
