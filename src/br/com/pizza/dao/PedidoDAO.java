@@ -24,7 +24,8 @@ public class PedidoDAO {
     private final String excluir = "DELETE FROM Pedido WHERE idPedido = ?";
     private final String listar = "SELECT pedido.idPedido, pedido.valorTotal, pedido.estado FROM Pedido";
     private final String listarPorCliente = "SELECT pedido.idPedido, pedido.valorTotal, pedido.estado FROM Pedido WHERE codCliente = (?)";
-
+    private final String atualizarStatus = "UPDATE Pedido SET estado= ? WHERE idPedido = ?";
+    
     public void inserirPedido(Pedido pedido, int codCliente){
          Connection con = null;
         PreparedStatement stmt1 = null;
@@ -45,7 +46,34 @@ public class PedidoDAO {
         }
     }
 
-        public List<Pedido> listarPedido() throws SQLException, Exception{
+    public List<Pedido> listarPedido() throws SQLException, Exception{
+        Connection con = null;
+        PreparedStatement stmt1 = null;
+        ResultSet rs = null;
+        List<Pedido> lista = new ArrayList();
+        try{
+            con = ConnectionFactory.getConnection();
+            stmt1 = con.prepareStatement(listar);
+            rs = stmt1.executeQuery();
+            while(rs.next()){
+                Pedido pedido = new Pedido();
+                pedido.setNumeroPedido(rs.getInt("idPedido"));
+                pedido.setValorTotal(rs.getFloat("valorTotal"));
+                pedido.setStatus(rs.getString("estado"));
+
+                lista.add(pedido);
+            }
+            return lista;
+        }catch (SQLException ex) {
+            throw new RuntimeException("Erro listar. Origem="+ex.getMessage());
+        }finally{
+            try{rs.close();}catch(Exception ex){System.out.println("Erro ao fechar result set. Ex="+ex.getMessage());}
+            try{stmt1.close();}catch(Exception ex){System.out.println("Erro ao fechar stmt. Ex="+ex.getMessage());}
+            try{con.close();}catch(Exception ex){System.out.println("Erro ao fechar conexão. Ex="+ex.getMessage());}
+        }
+        }
+    
+    public List<Pedido> listarPedidoCliente(int codCliente) throws SQLException, Exception{
         Connection con = null;
         PreparedStatement stmt1 = null;
         ResultSet rs = null;
@@ -72,34 +100,7 @@ public class PedidoDAO {
         }
         }
         
-        public List<Pedido> listarPedidoCliente(int codCliente) throws SQLException, Exception{
-        Connection con = null;
-        PreparedStatement stmt1 = null;
-        ResultSet rs = null;
-        List<Pedido> lista = new ArrayList();
-        try{
-            con = ConnectionFactory.getConnection();
-            stmt1 = con.prepareStatement(listar);
-            rs = stmt1.executeQuery();
-            while(rs.next()){
-                Pedido pedido = new Pedido();
-                pedido.setNumeroPedido(rs.getInt("idPedido"));
-                pedido.setValorTotal(rs.getFloat("valorTotal"));
-                pedido.setStatus(rs.getString("estado"));
-
-                lista.add(pedido);
-            }
-            return lista;
-        }catch (SQLException ex) {
-            throw new RuntimeException("Erro listar. Origem="+ex.getMessage());
-        }finally{
-            try{rs.close();}catch(Exception ex){System.out.println("Erro ao fechar result set. Ex="+ex.getMessage());}
-            try{stmt1.close();}catch(Exception ex){System.out.println("Erro ao fechar stmt. Ex="+ex.getMessage());}
-            try{con.close();}catch(Exception ex){System.out.println("Erro ao fechar conexão. Ex="+ex.getMessage());}
-        }
-        }
-        
-        public void atualizar(Pedido pedido){
+    public void atualizar(Pedido pedido){
         Connection con = null;
         PreparedStatement stmt = null;
         try{
@@ -117,7 +118,8 @@ public class PedidoDAO {
             try{con.close();}catch(Exception ex){System.out.println("Erro ao fechar conexÃ£o. Ex="+ex.getMessage());}
         }
     }
-        public void excluir(Pedido pedido) throws SQLException{
+        
+    public void excluir(Pedido pedido) throws SQLException{
         Connection con = null;
         PreparedStatement stmt = null;
         try{
@@ -132,4 +134,20 @@ public class PedidoDAO {
             try{con.close();}catch(Exception ex){System.out.println("Erro ao fechar conexÃ£o. Ex="+ex.getMessage());}
         }
     }
+        
+    public void atualizarStatus(String status) throws SQLException{
+        Connection con = null;
+        PreparedStatement stmt = null;
+        try{
+            con = ConnectionFactory.getConnection();
+            stmt = con.prepareStatement(atualizarStatus);
+            stmt.setString(1,status);
+            stmt.executeUpdate();
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally{
+            try{stmt.close();}catch(Exception ex){System.out.println("Erro ao fechar stmt. Ex="+ex.getMessage());}
+            try{con.close();}catch(Exception ex){System.out.println("Erro ao fechar conexÃ£o. Ex="+ex.getMessage());}
+        }
+    }  
 }

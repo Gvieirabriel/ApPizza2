@@ -140,19 +140,6 @@ public class AlterarPrecoPizza extends javax.swing.JFrame {
 
     private void tipoPizzaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tipoPizzaItemStateChanged
         // TODO add your handling code here:
-        //String tipoP = (String) tipoPizza.getSelectedItem();
-        //if(tipoP.equals("Simples")){
-        //    this.preco.setVisible(true);
-        //    this.precoCm.setVisible(true);
-        //}else
-        //if(tipoP.equals("Especial")){
-        //    this.preco.setVisible(true);
-        //    this.precoCm.setVisible(true);
-        //}else
-        //if(tipoP.equals("Premium")){
-        //    this.tipo.setVisible(true);
-        //    this.precoCm.setVisible(true);
-        //}
     }//GEN-LAST:event_tipoPizzaItemStateChanged
 
     private void tipoPizzaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tipoPizzaActionPerformed
@@ -164,17 +151,7 @@ public class AlterarPrecoPizza extends javax.swing.JFrame {
     }//GEN-LAST:event_precoCmActionPerformed
 
     private void salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarActionPerformed
-        // TODO add your handling code here:
-        //Tipo tipo = null;
-        //TipoDAO dao = new TipoDAO(); 
-        //try{
-        //    tipo.setValorCmQuadrado(Float.parseFloat(precoCm.getText()));
-        //    tipo.setTipo(JComboBox.getSelectedIndex());
-        //    dao.atualizarValorPizzaCm(tipo);
-        //}catch (Exception ex) {
-        //    JOptionPane.showMessageDialog(null,"Erro ao atualizar no banco de dados. E="+ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-        //} 
-       
+        // TODO add your handling code here:       
         String tipoP = (String) tipoPizza.getSelectedItem();
         float valorP = Float.parseFloat(precoCm.getText());
         TipoDAO dao = new TipoDAO();  
