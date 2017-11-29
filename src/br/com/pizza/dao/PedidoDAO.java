@@ -137,13 +137,14 @@ public class PedidoDAO {
         }
     }
         
-    public void atualizarStatus(String status) throws SQLException{
+    public void atualizarStatus(String status,int idPedido) throws SQLException{
         Connection con = null;
         PreparedStatement stmt = null;
         try{
             con = ConnectionFactory.getConnection();
             stmt = con.prepareStatement(atualizarStatus);
             stmt.setString(1,status);
+            stmt.setInt(2, idPedido);
             stmt.executeUpdate();
         }catch (SQLException e) {
             throw new RuntimeException(e);

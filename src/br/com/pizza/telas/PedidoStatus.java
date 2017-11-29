@@ -10,6 +10,7 @@ import br.com.appizza.cliente.Cliente;
 import br.com.appizza.pedido.Pedido;
 import br.com.pizza.dao.ClienteDAO;
 import br.com.pizza.dao.PedidoDAO;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -53,7 +54,7 @@ public class PedidoStatus extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        pesquisar.setText("Status");
+        pesquisar.setText("Telefone");
 
         pesqCli.setText("Ok");
         pesqCli.addActionListener(new java.awt.event.ActionListener() {
@@ -70,11 +71,26 @@ public class PedidoStatus extends javax.swing.JFrame {
         });
 
         tabelaPedidos.setModel(ModeloTabelaPedidos);
+        tabelaPedidos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaPedidosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabelaPedidos);
 
-        status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aberto", "Entregando", "Fechado" }));
+        status.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                statusActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Atualizar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -128,7 +144,7 @@ public class PedidoStatus extends javax.swing.JFrame {
         new TelaInicial().setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_cancelarActionPerformed
-
+ 
     private void pesqCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesqCliActionPerformed
         // TODO add your handling code here:
         ClienteDAO daoc = new ClienteDAO();
@@ -142,7 +158,6 @@ public class PedidoStatus extends javax.swing.JFrame {
                 System.out.println(lista.get(0).getIdCliente());
                 listaP = dao.listarPedidoCliente(lista.get(0).getIdCliente());
                 if(listaP.isEmpty()){
-                    dao.atualizarStatus(statusP);
                     JOptionPane.showMessageDialog(null, "Atualizado com sucesso");
                 }
             } catch (Exception ex) {
@@ -154,6 +169,29 @@ public class PedidoStatus extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Não encontrado.");
         }
     }//GEN-LAST:event_pesqCliActionPerformed
+
+    private void statusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_statusActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        PedidoDAO dao = new PedidoDAO();
+        String statusP = (String) status.getSelectedItem();
+        Pedido p = new Pedido();
+        p = ModeloTabelaPedidos.getPedido(linhaClicada);
+        try {
+            dao.atualizarStatus(statusP,p.getNumeroPedido());
+        } catch (SQLException ex) {
+            Logger.getLogger(PedidoStatus.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        ModeloTabelaPedidos.fireTableRowsUpdated(linhaClicada, linhaClicada);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tabelaPedidosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaPedidosMouseClicked
+        // TODO add your handling code here:
+        linhaClicada = tabelaPedidos.rowAtPoint(evt.getPoint());
+    }//GEN-LAST:event_tabelaPedidosMouseClicked
 
     /**
      * @param args the command line arguments
