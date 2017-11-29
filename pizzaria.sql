@@ -26,15 +26,6 @@ create table Sabor(
     primary key(idSabor)
 );
 
-create table Forma(
-	idForma int not null auto_increment,
-	nomeForma varchar(20),
-    codSabor int not null,
-    dimensaoLado float,
-    foreign key (codSabor) references Sabor(idSabor),
-    primary key(idForma)
-);
-
 create table Pedido(
 	idPedido int not null auto_increment,
     valorTotal float,
@@ -44,12 +35,15 @@ create table Pedido(
 	primary key(idPedido)
 );
 
-create table ItemPedido(
-	idItemPedido int not null auto_increment,
-    valorUnitario double,
+
+create table Forma(
+	idForma int not null auto_increment,
+	nomeForma varchar(20),
+    codSabor int not null,
+    dimensaoLado float,
     codPedido int not null,
-    codForma int not null,
-	primary key(idItemPedido),
+	valorUnitario double,
     foreign key (codPedido) references Pedido(idPedido),
-    foreign key (codForma) references Forma(idForma)
+    foreign key (codSabor) references Sabor(idSabor),
+    primary key(idForma)
 );
