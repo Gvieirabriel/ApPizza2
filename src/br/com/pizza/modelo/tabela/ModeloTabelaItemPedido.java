@@ -5,7 +5,7 @@
  */
 package br.com.pizza.modelo.tabela;
 
-import br.com.appizza.pedido.Pedido;
+import br.com.appizza.formas.Forma;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
@@ -14,21 +14,22 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Pichau
  */
-public class ModeloTabelaPedidos extends AbstractTableModel{
-    private String[] colunas = new String[]{"Pedido","Status","Valor Total"};
-    private List<Pedido> lista = new ArrayList();
+public class ModeloTabelaItemPedido extends AbstractTableModel{
+
+    private String[] colunas = new String[]{"Sabores","Forma","Valor"};
+    private List<Forma> lista = new ArrayList();
     
-    public ModeloTabelaPedidos() {
+    public ModeloTabelaItemPedido() {
         
         }
     
-    public ModeloTabelaPedidos(List<Pedido> lista) {
+    public ModeloTabelaItemPedido(List<Forma> lista) {
         this.lista = lista;
     }
     
     
-    public void AdicionaPedido(Pedido cliente){
-        this.lista.add(cliente);
+    public void AdicionaItemPedido(Forma f){
+        this.lista.add(f);
         //this.fireTableRowsInserted(lista.size()-1,lista.size()-1);
     }
     
@@ -40,30 +41,26 @@ public class ModeloTabelaPedidos extends AbstractTableModel{
         this.fireTableRowsDeleted(0,indice);//update JTable
     }
     
-    public boolean removePedido(Pedido cliente) {
-        int linha = this.lista.indexOf(cliente);
-        boolean result = this.lista.remove(cliente);
+    public boolean removeItemPedido(Forma f) {
+        int linha = this.lista.indexOf(f);
+        boolean result = this.lista.remove(f);
         this.fireTableRowsDeleted(linha,linha);
         return result;
     }
     
-    public List<Pedido> getLista(int[] indices) {
-        List<Pedido> lista = new ArrayList();
+    public List<Forma> getLista(int[] indices) {
+        List<Forma> lista = new ArrayList();
         for(int i = 0; i < indices.length; i++){
             lista.add(this.lista.get(indices[i]));
         }
         return lista;
     }
 
-    public void setLista(List<Pedido> lista) {
+    public void setLista(List<Forma> lista) {
         this.lista = lista;
         this.fireTableRowsInserted(0,lista.size()-1);
     }
     
-    public Pedido getPedido(int linha){
-        return lista.get(linha);
-    }
-
     @Override
     public int getRowCount() {
         return this.lista.size();
@@ -73,21 +70,25 @@ public class ModeloTabelaPedidos extends AbstractTableModel{
     public int getColumnCount() {
         return this.colunas.length;
     }
-    
-    @Override
-    public String getColumnName(int index) {
-        return this.colunas[index];
-    }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Pedido pedido = lista.get(rowIndex);
+        Forma f = lista.get(rowIndex);
+        String s;
+        if(f.getSabores().size()==1)
+            s = f.getSabores().get(0).getNome();
+        else
+            s = f.getSabores().get(0).getNome() + f.getSabores().get(1).getNome();
         switch (columnIndex){
-            case 0: return pedido.getNumeroPedido();
-            case 1: return pedido.getStatus();
-            case 2: return pedido.getValorTotal();
+            case 0: return s;
+            case 1: return f.getForma();
+            case 2: return f.getValor();
             default : return null;
         }
+    }
+
+    public Forma getItemPedido(int linhaClicada) {
+        return lista.get(linhaClicada);
     }
     
 }

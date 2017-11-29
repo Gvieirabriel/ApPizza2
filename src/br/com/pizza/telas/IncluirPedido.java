@@ -11,6 +11,7 @@ import br.com.appizza.formas.pRedonda;
 import br.com.appizza.formas.pTriangular;
 import br.com.appizza.pedido.Pedido;
 import br.com.appizza.sabor.Sabor;
+import br.com.pizza.dao.FormaDAO;
 import br.com.pizza.dao.PedidoDAO;
 import br.com.pizza.dao.SaborDAO;
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ public class IncluirPedido extends javax.swing.JFrame {
             Logger.getLogger(IncluirPedido.class.getName()).log(Level.SEVERE, null, ex);
         }
         if(!lista.isEmpty()){
-            for (int i = 0; i < lista.size(); i++) {
+            for (int i = 1; i < lista.size(); i++) {
                 jComboBox2.addItem(lista.get(i).getNome());
                 jComboBox3.addItem(lista.get(i).getNome());
             }
@@ -211,14 +212,25 @@ public class IncluirPedido extends javax.swing.JFrame {
         sabores.add(sabor);
         f.setSabores(sabores);
         f.calculaValor();
-        
+
         PedidoDAO pedidodao = new PedidoDAO();
         Pedido pedido = new Pedido();
         List<Forma> pizzas = new ArrayList<Forma>();
         pizzas.add(f);
+        
         pedido.setPedidos(pizzas);
         pedido.setValorTotal(pedido.calculaPrecoTotal());
-        pedidodao.inserirPedido(pedido,codCliente);
+        int idPedido = pedidodao.inserirPedido(pedido,codCliente);
+        
+        FormaDAO formaD = new FormaDAO();
+        f.setForma(forma);
+        f.setCodPedido(idPedido);
+        
+        if(jComboBox3.getSelectedItem().toString().equals("Sem segundo sabor")){
+            formaD.inserirFormaUmSabor(f);
+        }else{
+            formaD.inserirFormaDoisUmSabor(f);
+        }
         
         this.setVisible(false);
     }//GEN-LAST:event_salvarActionPerformed

@@ -26,30 +26,5 @@ public class ApPizza {
         TelaInicial t = new TelaInicial();
         t.setVisible(true);
         t.setTitle("ApPizza");
-        try {
-            if(!verificaTipos())
-              cadastraTipos();
-        } catch (SQLException ex) {
-            Logger.getLogger(ApPizza.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
-
-    private static void cadastraTipos() throws SQLException {
-        TipoDAO tipoDAO = new TipoDAO();
-        Tipo tipo = new Tipo();
-        tipo.setTipo("Simples");
-        tipoDAO.inserirTipo(tipo);
-        tipo = new Tipo();
-        tipo.setTipo("Especial");
-        tipoDAO.inserirTipo(tipo);
-        tipo = new Tipo();
-        tipo.setTipo("Premium");
-        tipoDAO.inserirTipo(tipo);
-    }
-
-    private static boolean verificaTipos() {
-        TipoDAO tipoDAO = new TipoDAO();
-        return tipoDAO.tipoTemTipo();
-    }
-    
 }

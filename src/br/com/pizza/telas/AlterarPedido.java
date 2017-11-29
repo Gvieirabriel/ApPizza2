@@ -39,7 +39,7 @@ public class AlterarPedido extends javax.swing.JFrame {
             Logger.getLogger(IncluirPedido.class.getName()).log(Level.SEVERE, null, ex);
         }
         if(!lista.isEmpty()){
-            for (int i = 0; i < lista.size(); i++) {
+            for (int i = 1; i < lista.size(); i++) {
                 jComboBox2.addItem(lista.get(i).getNome());
             }
         }

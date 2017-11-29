@@ -20,7 +20,7 @@ public class TipoDAO {
     private final String incluir = "INSERT INTO Tipo(tipo,valorCmQuadrado) VALUES (?,?)";
     private final String atualizar = "UPDATE tipo SET tipo = ?, valorCmQuadrado = ? WHERE idTipo = ?";
     private final String excluir = "DELETE FROM tipo WHERE idTipo = ?";
-    private final String pesquisaTipo = "SELECT tipo.tipo FROM tipo";
+    private final String pesquisaTipo = "SELECT valorCmQuadrado FROM tipo WHERE idTipo = ?";
     private final String atualizarValorPizzaCm = "UPDATE tipo SET ValorCmQuadrado = ? WHERE tipo LIKE ?";
     
     public void inserirTipo(Tipo tipo) throws SQLException{
@@ -113,5 +113,28 @@ public class TipoDAO {
             try{stmt.close();}catch(Exception ex){System.out.println("Erro ao fechar stmt. Ex="+ex.getMessage());}
             try{con.close();}catch(Exception ex){System.out.println("Erro ao fechar conexÃ£o. Ex="+ex.getMessage());}
         }
-    }   
+    }
+    
+    public double pesquisarValTipo(int idTipo) throws SQLException{
+        Connection con = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try{
+            con = ConnectionFactory.getConnection();
+            stmt = con.prepareStatement(pesquisaTipo);
+            stmt.setInt(1,idTipo);
+            rs = stmt.executeQuery();
+            double val = 0;
+            while(rs.next()){
+                val = rs.getInt("valorCmQuadrado");
+            }
+            return val;          
+        }catch (SQLException ex) {
+            throw new RuntimeException("Erro listar. Origem="+ex.getMessage());
+        }finally{
+            try{rs.close();}catch(Exception ex){System.out.println("Erro ao fechar result set. Ex="+ex.getMessage());}
+            try{stmt.close();}catch(Exception ex){System.out.println("Erro ao fechar stmt. Ex="+ex.getMessage());}
+            try{con.close();}catch(Exception ex){System.out.println("Erro ao fechar conexÃ£o. Ex="+ex.getMessage());}
+        }
+    }
 }

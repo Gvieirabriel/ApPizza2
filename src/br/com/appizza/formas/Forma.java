@@ -6,17 +6,24 @@
 package br.com.appizza.formas;
 
 import br.com.appizza.sabor.Sabor;
+import br.com.pizza.dao.TipoDAO;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Gabriel
  */
 public class Forma {
+    private int codForma;
+    private int codPedido;
     private List<Sabor> sabores;
     private String forma;
     private double dimensao;
     private double valor;
+    
     
     public String getForma() {
         return forma;
@@ -52,22 +59,39 @@ public class Forma {
     
     public void calculaValor(){
         if(sabores.size()==1)
-            this.valor = dimensaoPorTipo(0);
+            try {
+                this.valor = this.getDimensao()*dimensaoPorTipo(sabores.get(0).getCodTipo());
+            } catch (SQLException ex) {
+                Logger.getLogger(Forma.class.getName()).log(Level.SEVERE, null, ex);
+            }
         else
             for(int i = 0; i < sabores.size(); i++)
-                this.valor += dimensaoPorTipo(i);
+                try {
+                    this.valor += this.getDimensao()*dimensaoPorTipo(sabores.get(i).getCodTipo());
+                } catch (SQLException ex) {
+                    Logger.getLogger(Forma.class.getName()).log(Level.SEVERE, null, ex);
+                }
         this.valor = this.valor/2;   
     }
     
-    public double dimensaoPorTipo(int i){
-        switch (sabores.get(i).getCodTipo()) {
-        //Simples = 1 real Especial = 2 Premium = 3
-            case 1:
-                return this.dimensao;
-            case 2:
-                return this.dimensao*2;
-            default:
-                return this.dimensao*3;
-        }
+    public double dimensaoPorTipo(int i) throws SQLException{
+        TipoDAO t = new TipoDAO();
+        return t.pesquisarValTipo(i);
+    }
+
+    public int getCodForma() {
+        return codForma;
+    }
+
+    public void setCodForma(int codForma) {
+        this.codForma = codForma;
+    }
+
+    public int getCodPedido() {
+        return codPedido;
+    }
+
+    public void setCodPedido(int codPedido) {
+        this.codPedido = codPedido;
     }
 }
