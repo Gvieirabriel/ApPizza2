@@ -12,7 +12,7 @@ import javax.swing.table.AbstractTableModel;
 
 /**
  *
- * @author Pichau
+ * @author Gabriel
  */
 public class ModeloTabelaItemPedido extends AbstractTableModel{
 

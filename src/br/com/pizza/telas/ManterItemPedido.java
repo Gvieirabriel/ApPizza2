@@ -35,9 +35,11 @@ public class ManterItemPedido extends javax.swing.JFrame {
     public ManterItemPedido() {
         ModeloTabelaItemPedido = new ModeloTabelaItemPedido();
         initComponents();
+    }
+    
+    public void listarPedidos(){
         FormaDAO fdao = new FormaDAO();
         PedidoDAO dao = new PedidoDAO();
-        System.out.println(codPedido);
         List<Forma> listaf = new ArrayList();
         try {
             listaf = fdao.listarForma(codPedido);
@@ -45,6 +47,7 @@ public class ManterItemPedido extends javax.swing.JFrame {
             Logger.getLogger(ManterPedido.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Erro");
         }
+
         ModeloTabelaItemPedido.setLista(listaf);
     }
 

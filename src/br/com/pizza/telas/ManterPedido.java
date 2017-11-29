@@ -180,7 +180,9 @@ public class ManterPedido extends javax.swing.JFrame {
             a.setVisible(true);
             this.setVisible(false);*/
            ManterItemPedido mip = new ManterItemPedido();
+           System.out.println(p.getNumeroPedido());
            mip.recebePedido(p.getNumeroPedido(),lista.get(0).getIdCliente());
+           mip.listarPedidos();
            mip.setVisible(true);
            this.setVisible(false);
         } 
