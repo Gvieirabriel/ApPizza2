@@ -19,9 +19,11 @@ public class pQuadrada extends Forma {
             System.out.println("Dimensao invalida");
     }
     
+    @Override
     public void setDimensaoCmQuadrados(double dimensaoCmQuadrados) {
+        System.err.println("Teste");
         if(dimensaoCmQuadrados>100&&dimensaoCmQuadrados<1600)
-            super.setDimensao(Math.sqrt(dimensaoCmQuadrados));
+            super.setDimensao(Math.round(Math.sqrt(dimensaoCmQuadrados)));
         else
             System.out.println("Dimensao invalida");
     }

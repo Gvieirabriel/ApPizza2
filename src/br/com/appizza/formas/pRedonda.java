@@ -21,9 +21,10 @@ public class pRedonda extends Forma {
             System.out.println("Dimensao invalida");
     }
     
+    @Override
     public void setDimensaoCmQuadrados(double dimensaoCmQuadrados) {
         if(dimensaoCmQuadrados>100&&dimensaoCmQuadrados<1600)
-            super.setDimensao(Math.sqrt(dimensaoCmQuadrados/PI));
+            super.setDimensao(Math.round(Math.sqrt(dimensaoCmQuadrados/PI)));
         else
             System.out.println("Dimensao invalida");
     }

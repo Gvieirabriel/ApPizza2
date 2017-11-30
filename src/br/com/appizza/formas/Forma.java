@@ -94,4 +94,8 @@ public class Forma {
     public void setCodPedido(int codPedido) {
         this.codPedido = codPedido;
     }
+    public void setDimensaoCmQuadrados(double dimensaoCmQuadrados) {
+        this.dimensao = dimensaoCmQuadrados;
+    }
+    
 }
