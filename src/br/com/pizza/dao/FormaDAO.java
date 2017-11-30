@@ -122,6 +122,7 @@ public class FormaDAO {
             stmt.setString(2,f.getForma());
             stmt.setInt(3,f.getSabores().get(0).getIdSabor());
             stmt.setDouble(4,f.getDimensao());
+            stmt.setDouble(5,f.getCodForma());
             stmt.executeUpdate();
         }catch (SQLException e) {
             throw new RuntimeException(e);
@@ -142,6 +143,7 @@ public class FormaDAO {
             stmt.setInt(3,f.getSabores().get(0).getIdSabor());
             stmt.setInt(4,f.getSabores().get(1).getIdSabor());
             stmt.setDouble(5,f.getDimensao());
+            stmt.setDouble(6,f.getCodForma());
             stmt.executeUpdate();
         }catch (SQLException e) {
             throw new RuntimeException(e);

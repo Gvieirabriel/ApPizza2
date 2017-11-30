@@ -31,6 +31,7 @@ public class AlterarPedido extends javax.swing.JFrame {
      * Creates new form AlterarPedido
      */
     int codPedido;
+    private int varIdForma;
     
     public AlterarPedido() {
         initComponents();
@@ -234,6 +235,7 @@ public class AlterarPedido extends javax.swing.JFrame {
         pedido.setPedidos(listaf);
         FormaDAO formaD = new FormaDAO();
         f.setForma(forma);
+        f.setCodForma(varIdForma);
         f.setCodPedido(codPedido);
         
         if(jComboBox3.getSelectedItem().toString().equals("Sem segundo sabor")){
@@ -257,7 +259,12 @@ public class AlterarPedido extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox4ActionPerformed
     
     public void recebePedido(int cod){
-        codPedido = cod;
+        this.codPedido = cod;
+    }
+    
+     public void recebePedido(int cod, int vForma){
+        this.codPedido = cod;
+        this.varIdForma = vForma;
     }
     /**
      * @param args the command line arguments

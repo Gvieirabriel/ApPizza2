@@ -140,7 +140,7 @@ public class ManterItemPedido extends javax.swing.JFrame {
         if(linhaClicada != -1){
             Forma p = ModeloTabelaItemPedido.getItemPedido(linhaClicada);
             AlterarPedido a = new AlterarPedido();
-            a.recebePedido(this.codPedido);
+            a.recebePedido(this.codPedido,p.getCodForma());
             a.setVisible(true);
             this.setVisible(false);
         } 

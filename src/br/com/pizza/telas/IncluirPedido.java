@@ -276,7 +276,10 @@ public class IncluirPedido extends javax.swing.JFrame {
             formaD.inserirFormaDoisUmSabor(f);
         }
         ManterItemPedido mip = new ManterItemPedido();
-        mip.recebePedido(codPedido,codCliente);
+        if(codPedido==0)
+            mip.recebePedido(idPedido,codCliente);
+        else
+            mip.recebePedido(codPedido,codCliente);
         mip.listarPedidos();
         mip.setVisible(true);
         this.setVisible(false);
