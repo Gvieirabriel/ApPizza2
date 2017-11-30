@@ -5,12 +5,7 @@
  */
 package br.com.appizza.main;
 
-import br.com.appizza.formas.Tipo;
-import br.com.pizza.dao.TipoDAO;
 import br.com.pizza.telas.TelaInicial;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *

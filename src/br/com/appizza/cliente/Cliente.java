@@ -5,9 +5,6 @@
  */
 package br.com.appizza.cliente;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  *
  * @author Gabriel

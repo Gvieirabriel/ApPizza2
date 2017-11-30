@@ -124,6 +124,7 @@ public class TelaInicial extends javax.swing.JFrame {
         ManterPedido mp = new ManterPedido();
         mp.setVisible(true);
         mp.setTitle("Cadastrar novo Pedido");
+        this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -131,6 +132,7 @@ public class TelaInicial extends javax.swing.JFrame {
         ManterCliente mc = new ManterCliente();
         mc.setVisible(true);
         mc.setTitle("Cadastrar novo Cliente");
+        this.setVisible(false);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -138,6 +140,7 @@ public class TelaInicial extends javax.swing.JFrame {
         ManterSaborPizza ms = new ManterSaborPizza();
         ms.setVisible(true);
         ms.setTitle("Cadastrar novo Sabor");
+        this.setVisible(false);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -145,6 +148,7 @@ public class TelaInicial extends javax.swing.JFrame {
         PedidoStatus p = new PedidoStatus();
         p.setVisible(true);
         p.setTitle("Status de pedidos");
+        this.setVisible(false);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -152,6 +156,7 @@ public class TelaInicial extends javax.swing.JFrame {
         AlterarPrecoPizza ap = new AlterarPrecoPizza();
         ap.setVisible(true);
         ap.setTitle("Alterar preço por Tipo");
+        this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
