@@ -13,6 +13,7 @@ import java.util.List;
  * @author Gabriel
  */
 public class Pedido {
+    private int idPedido;
     private int numeroPedido;
     private double valorTotal;
     private List<Forma> itens;
@@ -58,6 +59,14 @@ public class Pedido {
                 return 0;//Retornar zero significa que alguma pizza não ta com valor calculado
         }
         return valorTotal;
+    }
+
+    public int getIdPedido() {
+        return idPedido;
+    }
+
+    public void setIdPedido(int idPedido) {
+        this.idPedido = idPedido;
     }
 
 }

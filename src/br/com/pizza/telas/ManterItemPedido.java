@@ -39,7 +39,6 @@ public class ManterItemPedido extends javax.swing.JFrame {
     
     public void listarPedidos(){
         FormaDAO fdao = new FormaDAO();
-        PedidoDAO dao = new PedidoDAO();
         List<Forma> listaf = new ArrayList();
         try {
             listaf = fdao.listarForma(codPedido);

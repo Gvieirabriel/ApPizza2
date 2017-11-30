@@ -113,10 +113,10 @@ public class PedidoDAO {
         try{
             con = ConnectionFactory.getConnection();
             stmt = con.prepareStatement(atualizar);
-            stmt.setDouble(1,pedido.getValorTotal());
+            stmt.setDouble(1,Math.round(pedido.getValorTotal()));
             stmt.setString(2,"Aberto");
-            stmt.setInt(3,pedido.getNumeroPedido());
-
+            stmt.setInt(3,pedido.getIdPedido());
+            System.out.println(pedido.getValorTotal());
             stmt.executeUpdate();
         }catch (SQLException e) {
             throw new RuntimeException(e);

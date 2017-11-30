@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -205,20 +206,32 @@ public class AlterarPedido extends javax.swing.JFrame {
         if(jComboBox3.getSelectedIndex()!=0){
             sabor2 = sabordao.pesquisa(jComboBox3.getSelectedItem().toString());
             sabores.add(sabor2);
-            System.err.println("Entrou");
         }
         f.setSabores(sabores);
         f.calculaValor();
         
         PedidoDAO pedidodao = new PedidoDAO();
         Pedido pedido = new Pedido();
-        List<Forma> pizzas = new ArrayList<Forma>();
-        pizzas.add(f);
         pedido.setNumeroPedido(codPedido);
-        pedido.setPedidos(pizzas);
+        
+   
+        FormaDAO fdao = new FormaDAO();
+        List<Forma> listaf = new ArrayList();
+        try {
+            listaf = fdao.listarForma(codPedido);
+        } catch (Exception ex) {
+            Logger.getLogger(ManterPedido.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Erro");
+        }
+        
+        listaf.add(f);
+           
+        pedido.setPedidos(listaf);
         pedido.setValorTotal(pedido.calculaPrecoTotal());
         pedidodao.atualizar(pedido);
-   
+        pedido.setIdPedido(codPedido);
+        
+        pedido.setPedidos(listaf);
         FormaDAO formaD = new FormaDAO();
         f.setForma(forma);
         f.setCodPedido(codPedido);

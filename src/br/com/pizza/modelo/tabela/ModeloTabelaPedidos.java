@@ -85,7 +85,7 @@ public class ModeloTabelaPedidos extends AbstractTableModel{
         switch (columnIndex){
             case 0: return pedido.getNumeroPedido();
             case 1: return pedido.getStatus();
-            case 2: return pedido.getValorTotal();
+            case 2: return "R$"+pedido.getValorTotal();
             default : return null;
         }
     }

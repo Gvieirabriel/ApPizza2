@@ -96,7 +96,7 @@ public class ModeloTabelaItemPedido extends AbstractTableModel{
         switch (columnIndex){
             case 0: return s;
             case 1: return f.getForma();
-            case 2: return f.getValor();
+            case 2: return "R$"+f.getValor();
             default : return null;
         }
     }
